@@ -25,7 +25,7 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String doGet(HttpServletRequest req) {
-        log.info("dddd"); return "/registration";
+        return "/registration";
     }
 
     @PostMapping("/registration")
