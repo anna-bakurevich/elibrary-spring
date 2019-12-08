@@ -4,6 +4,8 @@ package com.jd2.elibrary.service.impl.impl;
 import com.jd2.elibrary.dao.BookDao;
 import com.jd2.elibrary.model.Book;
 import com.jd2.elibrary.service.impl.BookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,7 @@ public class DefaultBookService implements BookService {
     }
 
     private final BookDao defaultBookDao;
+    private static final Logger log = LoggerFactory.getLogger(DefaultBookService.class);
 
 
     @Override
@@ -46,7 +49,12 @@ public class DefaultBookService implements BookService {
         //уменьшенное кол-во
         int newCount = oldCount - count;
         //устанавливаем уменьшенное кол-во
-        defaultBookDao.updateCount(id, newCount);
+        if (newCount >=0) {
+            defaultBookDao.updateCount(id, newCount);
+        } else {
+            log.error("Введенное количество больше имеющегося в наличии! Изменения не внесены.");
+        }
+
     }
 
     @Override

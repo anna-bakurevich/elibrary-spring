@@ -23,7 +23,7 @@ public class EditBookCatalogueController {
         this.bookService = bookService;
     }
 
-    private int pageNumber = 1;
+    private int pageNumber = 0;
     private int pageSize = 2;
 
     @GetMapping("/editBookCatalogue")

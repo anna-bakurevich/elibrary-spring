@@ -31,7 +31,7 @@ public class CustomerPageController {
         this.orderService = orderService;
     }
 
-    private int pageNumber = 1;
+    private int pageNumber = 0;
     private int pageSize = 2;
 
     @GetMapping()
