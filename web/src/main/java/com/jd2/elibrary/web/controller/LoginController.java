@@ -5,6 +5,10 @@ import com.jd2.elibrary.model.User;
 import com.jd2.elibrary.service.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 @Controller
 @RequestMapping
@@ -45,9 +53,16 @@ public class LoginController {
         log.info("user {} logged", user.getLogin());
         req.getSession().setAttribute("login", user);
         if (user.getRole().equals(Role.LIBRARIAN)) {
+            Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(auth);
             return "redirect:/librarianPage";
         }
         return "redirect:/customerPage";
+    }
+
+    private List<GrantedAuthority> getAuthorities() {
+        return Arrays.asList((GrantedAuthority) () -> "ROLE_CUSTOMER",
+                (GrantedAuthority) () -> "ROLE_LIBRARIAN");
     }
 }
 

@@ -4,6 +4,7 @@ import com.jd2.elibrary.model.User;
 import com.jd2.elibrary.service.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,7 @@ public class LibrarianPageController {
     }
 
     @PostMapping("/librarianPage")
+    @Secured("ROLE_LIBRARIAN")
     public String doPost(HttpServletRequest req) {
         int userId = Integer.parseInt(req.getParameter("deleteId"));
         if (userService.existsById(userId)) {
