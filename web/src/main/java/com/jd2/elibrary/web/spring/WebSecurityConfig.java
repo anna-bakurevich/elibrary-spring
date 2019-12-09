@@ -1,5 +1,6 @@
 package com.jd2.elibrary.web.spring;
 
+import com.jd2.elibrary.model.Role;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/index", "/login", "/registration").permitAll()
                 .antMatchers("/customerPage").hasRole("CUSTOMER")
-                .antMatchers("/librarianPage").hasRole("LIBRARIAN")
+                .antMatchers("/librarianPage","/editBookCatalogue").hasRole("LIBRARIAN")
                 .anyRequest().authenticated();
     }
 }

@@ -32,7 +32,6 @@ public class LibrarianPageController {
     }
 
     @PostMapping("/librarianPage")
-    @Secured("ROLE_LIBRARIAN")
     public String doPost(HttpServletRequest req) {
         int userId = Integer.parseInt(req.getParameter("deleteId"));
         if (userService.existsById(userId)) {

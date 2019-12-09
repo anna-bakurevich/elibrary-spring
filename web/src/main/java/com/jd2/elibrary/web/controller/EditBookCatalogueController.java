@@ -38,7 +38,6 @@ public class EditBookCatalogueController {
     }
 
     @PostMapping("/editBookCatalogue")
-    @Secured("ROLE_LIBRARIAN")
     public String doPost(HttpServletRequest req){
 
         if (req.getParameter("nextPage") != null) {

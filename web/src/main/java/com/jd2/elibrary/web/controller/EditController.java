@@ -1,5 +1,6 @@
 package com.jd2.elibrary.web.controller;
 
+import com.jd2.elibrary.model.Role;
 import com.jd2.elibrary.model.User;
 import com.jd2.elibrary.service.impl.UserService;
 import org.slf4j.Logger;
@@ -29,7 +30,6 @@ public class EditController {
     }
 
     @PostMapping("/edit")
-    @Secured("ROLE_CUSTOMER")
     public String doPost(HttpServletRequest req) {
         User user = (User) req.getSession().getAttribute("login");
         String firstName = req.getParameter("firstName");
@@ -41,6 +41,9 @@ public class EditController {
         userService.update(user, firstName, lastName, phone);
         log.info("user {} update", user.getId());
         req.getSession().setAttribute("login", user);
+        if (user.getRole().equals(Role.LIBRARIAN)){
+            return "redirect:/librarianPage";
+        }
         return "redirect:/customerPage";
     }
 }

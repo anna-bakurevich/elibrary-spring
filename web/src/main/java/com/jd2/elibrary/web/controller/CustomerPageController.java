@@ -46,7 +46,6 @@ public class CustomerPageController {
     }
 
     @PostMapping()
-    @Secured("ROLE_CUSTOMER")
     public String doPost(HttpServletRequest req) {
 
         if (req.getParameter("nextPage") != null) {

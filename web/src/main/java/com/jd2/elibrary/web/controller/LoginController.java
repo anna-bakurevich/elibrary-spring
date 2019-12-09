@@ -52,9 +52,10 @@ public class LoginController {
         }
         log.info("user {} logged", user.getLogin());
         req.getSession().setAttribute("login", user);
+        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
         if (user.getRole().equals(Role.LIBRARIAN)) {
-            Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(auth);
             return "redirect:/librarianPage";
         }
         return "redirect:/customerPage";
