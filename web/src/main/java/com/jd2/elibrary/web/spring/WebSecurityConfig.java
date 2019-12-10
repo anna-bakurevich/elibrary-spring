@@ -17,9 +17,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                //для всех пользователей
                 .antMatchers("/index", "/login", "/registration").permitAll()
+                //для клиентов
                 .antMatchers("/customerPage").hasRole("CUSTOMER")
+                //для библиотекарей
                 .antMatchers("/librarianPage","/editBookCatalogue").hasRole("LIBRARIAN")
+                //все остальное для всех аутентифицированных пользователей
                 .anyRequest().authenticated();
     }
 }

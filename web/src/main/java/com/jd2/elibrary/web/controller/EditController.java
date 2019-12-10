@@ -26,7 +26,7 @@ public class EditController {
 
     @GetMapping("/edit")
     public String doGet(HttpServletRequest req) {
-        return "/edit";
+        return "edit";
     }
 
     @PostMapping("/edit")

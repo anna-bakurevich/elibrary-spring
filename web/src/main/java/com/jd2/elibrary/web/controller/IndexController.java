@@ -15,6 +15,6 @@ public class IndexController {
 
     @PostMapping("/index")
     public String doPost() {
-        return "redirect:/login";
+        return "login";
     }
 }

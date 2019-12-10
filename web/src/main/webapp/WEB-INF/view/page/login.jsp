@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="springc" uri="http://www.springframework.org/tags" %>
 
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="translations" var="messages"/>
@@ -19,7 +20,7 @@
     <input type="text" required placeholder="login" name="login"><br>
     <input type="text" required placeholder="password" name="password"><br><br>
     <input class="button" type="submit" value=<fmt:message key="button.login" bundle="${messages}"/>>
-    <a href="<c:url value="/registration"/>"><fmt:message key="signup" bundle="${messages}"/></a>
+<%--    <a href="<springc:url value="/registration"/>"><fmt:message key="signup" bundle="${messages}"/></a>--%>
 
 </form>
 </body>

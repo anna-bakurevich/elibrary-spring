@@ -25,7 +25,7 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String doGet(HttpServletRequest req) {
-        return "/registration";
+        return "registration";
     }
 
     @PostMapping("/registration")
@@ -48,10 +48,10 @@ public class RegistrationController {
             userService.save(user);
             log.info("user {} registered", login);
             req.getSession().setAttribute("login", user);
-            return "redirect:customerPage";
+            return "customerPage";
         }
             req.setAttribute("error", true);
             log.info("user is not registered");
-            return "/registration";
+            return "registration";
     }
 }

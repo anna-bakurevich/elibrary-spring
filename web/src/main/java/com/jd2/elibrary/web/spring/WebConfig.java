@@ -60,24 +60,24 @@ public class WebConfig {
         return new RegistrationController(serviceConfig.userService());
     }
 
+//    @Bean
+//    ViewResolver viewResolver() {
+//        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+//        resolver.setSuffix(".jsp");
+//        return resolver;
+//    }
+
     @Bean
-    ViewResolver viewResolver() {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setSuffix(".jsp");
+    public UrlBasedViewResolver tilesViewResolver(){
+        UrlBasedViewResolver resolver = new UrlBasedViewResolver();
+        resolver.setViewClass(TilesView.class);
         return resolver;
     }
 
-//    @Bean
-//    public UrlBasedViewResolver tilesViewResolver(){
-//        UrlBasedViewResolver resolver = new UrlBasedViewResolver();
-//        resolver.setViewClass(TilesView.class);
-//        return resolver;
-//    }
-//
-//    @Bean
-//    public TilesConfigurer tilesConfigurer(){
-//        final TilesConfigurer tilesConfigurer = new TilesConfigurer();
-//        tilesConfigurer.setDefinitions("/WEB-INF/tles.xml");
-//        return tilesConfigurer;
-//    }
+    @Bean
+    public TilesConfigurer tilesConfigurer(){
+        final TilesConfigurer tilesConfigurer = new TilesConfigurer();
+        tilesConfigurer.setDefinitions("/WEB-INF/tiles.xml");
+        return tilesConfigurer;
+    }
 }

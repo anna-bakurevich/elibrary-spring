@@ -4,7 +4,6 @@ import com.jd2.elibrary.model.Book;
 import com.jd2.elibrary.service.impl.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +33,7 @@ public class EditBookCatalogueController {
         req.setAttribute("books", books);
         req.setAttribute("maxNumber", maxNumber);
         req.setAttribute("pageNumber", pageNumber);
-        return "/editBookCatalogue";
+        return "editBookCatalogue";
     }
 
     @PostMapping("/editBookCatalogue")
@@ -65,6 +64,6 @@ public class EditBookCatalogueController {
             bookService.incrCountBook(bookAdd, countAdd);
             log.info("book {} increased by {}", bookAdd, countAdd);
         }
-        return "redirect:/editBookCatalogue";
+        return "editBookCatalogue";
     }
 }
