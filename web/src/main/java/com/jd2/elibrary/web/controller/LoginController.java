@@ -51,6 +51,7 @@ public class LoginController {
             return "registration";
         }
         log.info("user {} logged", user.getLogin());
+        //как сохранить параметр для использования в .jsp
         req.getSession().setAttribute("login", user);
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);

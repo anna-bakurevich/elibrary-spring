@@ -11,7 +11,9 @@
     <title>Customer page</title>
 </head>
 
+<%--где взять имя пользователя?--%>
 <h1><fmt:message key="welcome.privatepage" bundle="${messages}"/>${login.firstName}!</h1>
+
 <a href="<springc:url value="/logout"/>"><fmt:message key="logout" bundle="${messages}"/></a>
 <a href="<springc:url value="/edit"/>"><fmt:message key="edit.heading" bundle="${messages}"/></a>
 
@@ -27,8 +29,6 @@
 
     </tr>
     <c:forEach items="${books}" var="book">
-        <%--        выводим на страницу только те книги, кол-во которых не ноль (доступные к заказу)--%>
-        <c:if test="${book.count != 0}">
             <tr>
                 <td>${book.authorFirstName}</td>
                 <td>${book.authorLastName}</td>
@@ -42,14 +42,13 @@
                     </form>
                 </td>
             </tr>
-        </c:if>
     </c:forEach>
 </table>
 
 <form method="post" action="${pageContext.request.contextPath}/customerPage">
     <input name="pageNumber" type="hidden" value="${pageNumber}">
 
-    <c:if test="${pageNumber>1}">
+    <c:if test="${pageNumber>0}">
         <input name="prevPage" type="submit" value=<fmt:message key="button.prev" bundle="${messages}"/>>
     </c:if>
 

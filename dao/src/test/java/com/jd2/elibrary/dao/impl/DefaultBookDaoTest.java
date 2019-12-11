@@ -2,12 +2,15 @@ package com.jd2.elibrary.dao.impl;
 
 import com.jd2.elibrary.dao.BookDao;
 import com.jd2.elibrary.dao.config.DaoConfig;
+import com.jd2.elibrary.dao.entity.BookEntity;
 import com.jd2.elibrary.model.Book;
 import com.jd2.elibrary.model.BookGenre;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,17 +76,18 @@ public class DefaultBookDaoTest {
         assertEquals("Шилдт", book.getAuthorLastName());
     }
 
-//    @Transactional
-//    @Test
-//    void pagingTest() {
-//        Page<BookEntity> booksPage = bookJpaRepository.findAll(PageRequest.of(
-//                0, 2, Sort.Direction.ASC, "title"));
-//        List<BookEntity> books = booksPage.getContent();
-//        for (BookEntity be : books) {
-//            System.out.println(be.getTitle());
-//        }
-//
-//    }
+    @Transactional
+    @Test
+    void pagingTest() {
+        List<Book> books = dao.paging(3,2);
+        for (Book b : books) {
+            System.out.println(b.getTitle());
+        }
+        assertNotNull(books);
+        assertEquals(2, books.size());
+
+
+    }
 
     @Test
     void updateCountTest() {

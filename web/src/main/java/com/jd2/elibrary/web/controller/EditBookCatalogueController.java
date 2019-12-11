@@ -4,12 +4,14 @@ import com.jd2.elibrary.model.Book;
 import com.jd2.elibrary.service.impl.BookService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Controller
@@ -29,7 +31,7 @@ public class EditBookCatalogueController {
     @GetMapping("/editBookCatalogue")
     public String doGet(HttpServletRequest req){
         List<Book> books = bookService.paging(pageNumber, pageSize);
-        int maxNumber = bookService.countPageBooks(pageSize);
+        int maxNumber = bookService.countPageBooks(pageSize)-1;
         req.setAttribute("books", books);
         req.setAttribute("maxNumber", maxNumber);
         req.setAttribute("pageNumber", pageNumber);
@@ -64,6 +66,6 @@ public class EditBookCatalogueController {
             bookService.incrCountBook(bookAdd, countAdd);
             log.info("book {} increased by {}", bookAdd, countAdd);
         }
-        return "editBookCatalogue";
+        return "redirect:/editBookCatalogue";
     }
 }

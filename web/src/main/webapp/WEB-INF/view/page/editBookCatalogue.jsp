@@ -47,9 +47,9 @@
 </table>
 
 <form method="post" action="${pageContext.request.contextPath}/editBookCatalogue">
-    <input name="pageNumber" type="hidden" value="${pageNumber}">
+<%--    <input name="pageNumber" type="hidden" value="${pageNumber}">--%>
 
-    <c:if test="${pageNumber>1}">
+    <c:if test="${pageNumber>0}">
         <input name="prevPage" type="submit" value=<fmt:message key="button.prev" bundle="${messages}"/>>
     </c:if>
 

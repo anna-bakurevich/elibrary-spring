@@ -72,7 +72,8 @@ public class DefaultBookService implements BookService {
     @Transactional
     public int countPageBooks(int pageSize) {
         int count = defaultBookDao.count();
-        return count / pageSize + 1;
+
+        return (int)Math.ceil(count/pageSize);
     }
 
 

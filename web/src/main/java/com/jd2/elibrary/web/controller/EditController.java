@@ -6,6 +6,7 @@ import com.jd2.elibrary.service.impl.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +32,8 @@ public class EditController {
 
     @PostMapping("/edit")
     public String doPost(HttpServletRequest req) {
-        User user = (User) req.getSession().getAttribute("login");
+
+       User user = (User) req.getSession().getAttribute("login");
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
         String phone = req.getParameter("phone");
@@ -40,6 +42,7 @@ public class EditController {
         user.setPhone(phone);
         userService.update(user, firstName, lastName, phone);
         log.info("user {} update", user.getId());
+       //как сохранить параметр для использования в edit.jsp?
         req.getSession().setAttribute("login", user);
         if (user.getRole().equals(Role.LIBRARIAN)){
             return "redirect:/librarianPage";

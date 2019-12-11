@@ -62,7 +62,7 @@ public class DefaultBookDao implements BookDao {
     @Override
     public List<Book> paging(int pageNumber, int size) {
         Page<BookEntity> booksPage = bookJpaRepository.findAll(PageRequest.of(
-                pageNumber, size, Sort.Direction.ASC, "title"));
+                pageNumber, size, Sort.by("title")));
         List<BookEntity> books = booksPage.getContent();
         return BookConverter.convertToListBook(books);
     }

@@ -8,6 +8,8 @@ import com.jd2.elibrary.service.impl.BookService;
 import com.jd2.elibrary.service.impl.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,7 +39,7 @@ public class CustomerPageController {
     @GetMapping()
     public String doGet(HttpServletRequest req) {
         List<Book> books = bookService.paging(pageNumber, pageSize);
-        int maxNumber = bookService.countPageBooks(pageSize);
+        int maxNumber = bookService.countPageBooks(pageSize) - 1;
         req.setAttribute("books", books);
         req.setAttribute("maxNumber", maxNumber);
         req.setAttribute("pageNumber", pageNumber);
@@ -75,7 +77,7 @@ public class CustomerPageController {
                     orderService.update(orderFilled, bookToOrder);
                     log.info("user {} update order {} at {}", user.getId(), orderFilled.getId(), LocalDateTime.now());
                     //уменьшаем в каталоге кол-во этой книги на 1
-                    bookService.decrCountBook(bookToOrder,1);
+                    bookService.decrCountBook(bookToOrder, 1);
                     //иначе создаем новый заказ и добавляем в него книгу
                 } else {
                     orderFilled = new Order();
@@ -95,7 +97,7 @@ public class CustomerPageController {
                 //вывести сообщение о недоступности книги для заказа
             }
         }
-        return "customerPage";
+        return "redirect:/customerPage";
     }
 }
 
