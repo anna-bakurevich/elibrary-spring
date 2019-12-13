@@ -12,9 +12,13 @@ public interface OrderService {
 
     List<Order> findAll();
 
-    void update(Order order, int bookId);
+    void addBookToOrder(Order order, int bookId);
+
+    void deleteBookFromOrder(int orderId, int bookId);
 
     List<Book> getBooksByOrderId(int orderId);
+
+    boolean existBookInOrder(int orderId, int bookId);
 
     boolean existById(int userId);
 

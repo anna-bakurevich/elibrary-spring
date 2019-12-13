@@ -30,8 +30,8 @@
         <put-attribute name="body" value="/WEB-INF/view/page/login.jsp"/>
     </definition>
 
-    <definition name="order" extends="default">
-        <put-attribute name="body" value="/WEB-INF/view/page/order.jsp"/>
+    <definition name="orderPage" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/page/orderPage.jsp"/>
     </definition>
 
     <definition name="registration" extends="default">

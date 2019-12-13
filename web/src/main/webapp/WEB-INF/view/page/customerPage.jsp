@@ -56,4 +56,4 @@
         <input name="nextPage" type="submit" value=<fmt:message key="button.next" bundle="${messages}"/>>
     </c:if>
 </form>
-<a href="<springc:url value="/order"/>"><fmt:message key="order.heading" bundle="${messages}"/></a>
+<a href="<springc:url value="/orderPage"/>"><fmt:message key="order.heading" bundle="${messages}"/></a>

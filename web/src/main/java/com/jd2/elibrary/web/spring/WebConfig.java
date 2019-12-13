@@ -60,6 +60,10 @@ public class WebConfig {
         return new RegistrationController(serviceConfig.userService());
     }
 
+    @Bean OrderPageController orderPageController(){
+        return new OrderPageController(serviceConfig.orderService(), serviceConfig.bookService());
+    }
+
 //    @Bean
 //    ViewResolver viewResolver() {
 //        InternalResourceViewResolver resolver = new InternalResourceViewResolver();

@@ -73,30 +73,36 @@ public class CustomerPageController {
             if (count > 0) {
                 //если уже есть заказ со статусом "оформляется"
                 if (orderFilled != null) {
-                    //добавляем в него книгу по bookId (обновляем заказ)
-                    orderService.update(orderFilled, bookToOrder);
-                    log.info("user {} update order {} at {}", user.getId(), orderFilled.getId(), LocalDateTime.now());
+                    //если такая книга уже есть в заказе
+                    if (orderService.existBookInOrder(orderFilled.getId(), bookToOrder)) {
+                        //вывести сообщение о наличии книги в заказе
+                        return "customerPage";
+                    }
+                    //иначе добавляем в него книгу по bookId (обновляем заказ)
+                    orderService.addBookToOrder(orderFilled, bookToOrder);
+                    log.info("user {} added book {} to order {} at {}", user.getId(), bookToOrder,
+                            orderFilled.getId(), LocalDateTime.now());
                     //уменьшаем в каталоге кол-во этой книги на 1
                     bookService.decrCountBook(bookToOrder, 1);
-                    //иначе создаем новый заказ и добавляем в него книгу
-                } else {
-                    orderFilled = new Order();
-                    orderFilled.setUser(user);
-                    orderFilled.setOrderDate(LocalDate.now());
-                    orderFilled.setReturnDate(LocalDate.now().plusDays(30));
-                    orderFilled.setOrderStatus(OrderStatus.FILLED);
-                    orderService.save(orderFilled);
-                    Order order = orderService.findOrderFilledByUserId(user.getId());
-                    log.info("user {} created order {} at {}", user.getId(), order.getId(), LocalDateTime.now());
-                    //добавляем книгу в новый заказ
-                    orderService.update(order, bookToOrder);
-                    //уменьшаем в каталоге кол-во этой книги на 1
-                    bookService.decrCountBook(bookToOrder, 1);
+                    return "redirect:/customerPage";
                 }
-            } else {
-                //вывести сообщение о недоступности книги для заказа
             }
+            //иначе создаем новый заказ и добавляем в него книгу
+            orderFilled = new Order();
+            orderFilled.setUser(user);
+            orderFilled.setOrderDate(LocalDate.now());
+            orderFilled.setReturnDate(LocalDate.now().plusDays(30));
+            orderFilled.setOrderStatus(OrderStatus.FILLED);
+            orderService.save(orderFilled);
+            Order order = orderService.findOrderFilledByUserId(user.getId());
+            log.info("user {} created order {} at {}", user.getId(), order.getId(), LocalDateTime.now());
+            //добавляем книгу в новый заказ
+            orderService.addBookToOrder(order, bookToOrder);
+            //уменьшаем в каталоге кол-во этой книги на 1
+            bookService.decrCountBook(bookToOrder, 1);
+            return "redirect:/customerPage";
         }
+        //вывести сообщение о недоступности книги для заказа
         return "redirect:/customerPage";
     }
 }

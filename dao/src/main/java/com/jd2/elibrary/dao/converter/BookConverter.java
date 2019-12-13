@@ -48,4 +48,15 @@ public class BookConverter {
         }
         return books;
     }
+
+    public static List<BookEntity> convertToListBookEntity(List<Book> books) {
+        if (books == null){
+            return null;
+        }
+        final List<BookEntity> booksEntity = new ArrayList<>();
+        for (Book b : books) {
+            booksEntity.add(convertToBookEntity(b));
+        }
+        return booksEntity;
+    }
 }

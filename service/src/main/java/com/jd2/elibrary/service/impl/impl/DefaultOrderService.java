@@ -35,8 +35,13 @@ public class DefaultOrderService implements OrderService {
 
     @Override
     @Transactional
-    public void update(Order order, int bookId) {
-        defaultOrderDao.updateOrder(order, bookId);
+    public void addBookToOrder(Order order, int bookId) {
+        defaultOrderDao.addBookToOrder(order, bookId);
+    }
+
+    @Override
+    public void deleteBookFromOrder(int orderId, int bookId) {
+        defaultOrderDao.deleteBookFromOrder(orderId, bookId);
     }
 
     @Override
@@ -44,6 +49,11 @@ public class DefaultOrderService implements OrderService {
     public List<Book> getBooksByOrderId(int orderId) {
         defaultOrderDao.getBooksByOrderId(orderId);
         return defaultOrderDao.getBooksByOrderId(orderId);
+    }
+
+    @Override
+    public boolean existBookInOrder(int orderId, int bookId) {
+        return defaultOrderDao.existBookInOrder(orderId, bookId);
     }
 
     @Override

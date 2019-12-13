@@ -40,6 +40,6 @@ public class DaoConfig {
 
     @Bean
     public OrderDao orderDao(){
-        return new DefaultOrderDao(orderJpaRepository, userJpaRepository);
+        return new DefaultOrderDao(orderJpaRepository, userJpaRepository, bookJpaRepository);
     }
 }

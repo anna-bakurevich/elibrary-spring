@@ -1,5 +1,6 @@
 package com.jd2.elibrary.dao;
 
+import com.jd2.elibrary.dao.entity.BookEntity;
 import com.jd2.elibrary.model.Book;
 import com.jd2.elibrary.model.Order;
 import com.jd2.elibrary.model.OrderStatus;
@@ -26,10 +27,15 @@ public interface OrderDao {
 
     boolean existsById(int id);
 
+    boolean existBookInOrder(int orderId, int bookId);
+
     boolean existByUser(User user);
 
     //update
-    void updateOrder(Order order, int bookId);
+    //добавление книги в заказ по bookId
+    void addBookToOrder(Order order, int bookId);
+    //удаление книги из заказа по bookId
+    void deleteBookFromOrder(int orderId, int bookId);
 
     //delete
     void deleteById(int id);

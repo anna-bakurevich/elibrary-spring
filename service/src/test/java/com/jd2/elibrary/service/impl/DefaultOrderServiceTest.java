@@ -69,10 +69,10 @@ public class DefaultOrderServiceTest {
     }
 
     @Test
-    void updateTest() {
+    void addBookToOrderTest() {
         Order order = new Order(100, new User(), null, null, OrderStatus.FILLED);
-        service.update(order, 1);
-        verify(dao).updateOrder(order, 1);
+        service.addBookToOrder(order, 1);
+        verify(dao).addBookToOrder(order, 1);
     }
 
     @Test
@@ -81,4 +81,5 @@ public class DefaultOrderServiceTest {
         service.save(order);
         verify(dao).save(order);
     }
+
 }

@@ -7,6 +7,7 @@ import com.jd2.elibrary.dao.converter.UserConverter;
 import com.jd2.elibrary.dao.entity.BookEntity;
 import com.jd2.elibrary.dao.entity.OrderEntity;
 import com.jd2.elibrary.dao.entity.UserEntity;
+import com.jd2.elibrary.dao.repository.BookJpaRepository;
 import com.jd2.elibrary.dao.repository.OrderJpaRepository;
 import com.jd2.elibrary.dao.repository.UserJpaRepository;
 import com.jd2.elibrary.model.Book;
@@ -19,10 +20,13 @@ import java.util.List;
 public class DefaultOrderDao implements OrderDao {
     private final OrderJpaRepository orderJpaRepository;
     private final UserJpaRepository userJpaRepository;
+    private final BookJpaRepository bookJpaRepository;
 
-    public DefaultOrderDao(OrderJpaRepository orderJpaRepository, UserJpaRepository userJpaRepository) {
+    public DefaultOrderDao(OrderJpaRepository orderJpaRepository, UserJpaRepository userJpaRepository,
+                           BookJpaRepository bookJpaRepository) {
         this.orderJpaRepository = orderJpaRepository;
         this.userJpaRepository = userJpaRepository;
+        this.bookJpaRepository = bookJpaRepository;
     }
 
     @Override
@@ -77,13 +81,35 @@ public class DefaultOrderDao implements OrderDao {
     }
 
     @Override
+    public boolean existBookInOrder(int orderId, int bookId) {
+        List<Book> books = getBooksByOrderId(orderId);
+        BookEntity bookEntity = bookJpaRepository.findById(bookId).get();
+        if (books.contains(BookConverter.convertToBook(bookEntity))) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public boolean existByUser(User user) {
         UserEntity userEntity = UserConverter.convertToUserEntity(user);
         return orderJpaRepository.existsByUserEntity(userEntity);
     }
 
     @Override
-    public void updateOrder(Order order, int bookId) {
+    public void addBookToOrder(Order order, int bookId) {
+        List<Book> books = getBooksByOrderId(order.getId());
+        System.out.println("Список книг в заказе " + books);
+        BookEntity bookEntity = bookJpaRepository.findById(bookId).get();
+        books.add(BookConverter.convertToBook(bookEntity));
+        OrderEntity orderEntity = OrderConverter.convertToOrderEntity(order);
+        orderEntity.setBooksInOrder(BookConverter.convertToListBookEntity(books));
+        orderJpaRepository.save(orderEntity);
+        System.out.println("Список книг в заказе после добавления " + orderJpaRepository.findById(order.getId()).get().getBooksInOrder());
+    }
+
+    @Override
+    public void deleteBookFromOrder(int orderId, int bookId) {
 
     }
 

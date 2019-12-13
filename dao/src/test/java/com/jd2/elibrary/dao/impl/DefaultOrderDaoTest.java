@@ -3,6 +3,7 @@ package com.jd2.elibrary.dao.impl;
 import com.jd2.elibrary.dao.OrderDao;
 import com.jd2.elibrary.dao.UserDao;
 import com.jd2.elibrary.dao.config.DaoConfig;
+import com.jd2.elibrary.model.Book;
 import com.jd2.elibrary.model.Order;
 import com.jd2.elibrary.model.OrderStatus;
 import com.jd2.elibrary.model.User;
@@ -15,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -94,8 +96,19 @@ public class DefaultOrderDaoTest {
 
     @Transactional
     @Test
-    void existByUser() {
+    void existByUserTest() {
         User user = userDao.findById(4);
         assertTrue(orderDao.existByUser(user));
     }
+
+    @Transactional
+    @Test
+    void deleteBookFromOrderTest(){
+        Order order = orderDao.findOrderByOrderStatusAndUser(OrderStatus.FILLED, 4).get(0);
+        System.out.println(orderDao.getBooksByOrderId(order.getId()).size());
+        orderDao.deleteBookFromOrder(order.getId(), 318);
+        System.out.println(orderDao.getBooksByOrderId(order.getId()).size());
+    }
+
+
 }
