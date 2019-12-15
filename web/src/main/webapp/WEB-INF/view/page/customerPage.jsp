@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="springc" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="translations" var="messages"/>
@@ -14,8 +14,8 @@
 <%--где взять имя пользователя?--%>
 <h1><fmt:message key="welcome.privatepage" bundle="${messages}"/>${login.firstName}!</h1>
 
-<a href="<springc:url value="/logout"/>"><fmt:message key="logout" bundle="${messages}"/></a>
-<a href="<springc:url value="/edit"/>"><fmt:message key="edit.heading" bundle="${messages}"/></a>
+<a href="<spring:url value="/logout"/>"><fmt:message key="logout" bundle="${messages}"/></a>
+<a href="<spring:url value="/edit"/>"><fmt:message key="edit.heading" bundle="${messages}"/></a>
 
 
 <h3><fmt:message key="catalogue" bundle="${messages}"/></h3>
@@ -56,4 +56,4 @@
         <input name="nextPage" type="submit" value=<fmt:message key="button.next" bundle="${messages}"/>>
     </c:if>
 </form>
-<a href="<springc:url value="/orderPage"/>"><fmt:message key="order.heading" bundle="${messages}"/></a>
+<a href="<spring:url value="/orderPage"/>"><fmt:message key="order.heading" bundle="${messages}"/></a>

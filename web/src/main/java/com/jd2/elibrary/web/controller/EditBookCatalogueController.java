@@ -40,6 +40,7 @@ public class EditBookCatalogueController {
     }
 
     @PostMapping("/editBookCatalogue")
+    //добавляеем параметр page
     public String doPost(HttpServletRequest req, @RequestParam("page") int pageNumber){
 
         if (req.getParameter("nextPage") != null) {
@@ -47,6 +48,7 @@ public class EditBookCatalogueController {
             req.setAttribute("pageNumber", pageNumber);
             List<Book> books = bookService.paging(pageNumber, pageSize);
             req.setAttribute("books", books);
+            //сохраняем параметр page для .jsp
             req.setAttribute("pageNumber", pageNumber);
 
         }

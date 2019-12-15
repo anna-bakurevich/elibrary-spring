@@ -4,12 +4,16 @@ import com.jd2.elibrary.service.impl.config.ServiceConfig;
 import com.jd2.elibrary.web.controller.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
+
+import java.util.Locale;
 
 @Configuration
 @EnableWebMvc
@@ -51,37 +55,50 @@ public class WebConfig {
     }
 
     @Bean
-    public LogoutController logoutController(){
+    public LogoutController logoutController() {
         return new LogoutController();
     }
 
     @Bean
-    public RegistrationController registrationController(){
+    public RegistrationController registrationController() {
         return new RegistrationController(serviceConfig.userService());
     }
 
-    @Bean OrderPageController orderPageController(){
+    @Bean
+    OrderPageController orderPageController() {
         return new OrderPageController(serviceConfig.orderService(), serviceConfig.bookService());
     }
 
-//    @Bean
-//    ViewResolver viewResolver() {
-//        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-//        resolver.setSuffix(".jsp");
-//        return resolver;
-//    }
-
     @Bean
-    public UrlBasedViewResolver tilesViewResolver(){
+    public UrlBasedViewResolver tilesViewResolver() {
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();
         resolver.setViewClass(TilesView.class);
         return resolver;
     }
 
     @Bean
-    public TilesConfigurer tilesConfigurer(){
+    public TilesConfigurer tilesConfigurer() {
         final TilesConfigurer tilesConfigurer = new TilesConfigurer();
         tilesConfigurer.setDefinitions("/WEB-INF/tiles.xml");
         return tilesConfigurer;
     }
+
+    @Bean
+    public ReloadableResourceBundleMessageSource messageSource() {
+        ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
+        source.setBasename("classpath:i18n/messages");
+        source.setDefaultEncoding("UTF-8");
+        return source;
+    }
+
+    @Bean
+    public CookieLocaleResolver localeResolver() {
+        CookieLocaleResolver resolver = new CookieLocaleResolver();
+        resolver.setDefaultLocale(Locale.forLanguageTag("ru"));
+        resolver.setCookieName("LocalCookie");
+        resolver.setCookieMaxAge(3600);
+        return resolver;
+    }
+
+
 }

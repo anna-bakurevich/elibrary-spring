@@ -13,7 +13,6 @@ import javax.sql.DataSource;
 
 @Configuration
 @Import(SettingsConfig.class)
-@EnableJpaRepositories(basePackages = "com.jd2.elibrary.dao.repository")
 public class HibernateConfig {
 
     private final SettingsConfig settingsConfig;
