@@ -29,13 +29,13 @@
             <td>${book.genre}</td>
             <td align="center">${book.count}</td>
             <td>
-                <form method="post" action="${pageContext.request.contextPath}/editBookCatalogue">
+                <form method="post" action="${pageContext.request.contextPath}/bookDelete">
                     <input name="bookDelete" type="hidden" value="${book.id}">
                     <input type="submit" style="height: 22px; width: 75px;"
                            value=<fmt:message key="delete" bundle="${messages}"/>>
                     <input name="countDelete" type="number" value=0 min=0 style="width: 40px">
                 </form>
-                <form method="post" action="${pageContext.request.contextPath}/editBookCatalogue">
+                <form method="post" action="${pageContext.request.contextPath}/bookAdd">
                     <input name="bookAdd" type="hidden" value="${book.id}">
                     <input type="submit" style="height: 22px; width: 75px;"
                            value=<fmt:message key="add" bundle="${messages}"/>>
@@ -50,13 +50,14 @@
 <%--    <input name="pageNumber" type="hidden" value="${pageNumber}">--%>
 
     <c:if test="${pageNumber>0}">
-        <input name="prevPage" type="submit" value=<fmt:message key="button.prev" bundle="${messages}"/>>
+        <input name="prevPage?page=${page-1}" type="submit" value=<fmt:message key="button.prev" bundle="${messages}"/>>
     </c:if>
 
     <c:if test="${pageNumber<maxNumber}">
-        <input name="nextPage" type="submit" value=<fmt:message key="button.next" bundle="${messages}"/>>
+        <input name="nextPage?page=${page+1}" type="submit" value=<fmt:message key="button.next" bundle="${messages}"/>>
     </c:if>
 </form>
+<springc:message
 
 <br>
 <br>

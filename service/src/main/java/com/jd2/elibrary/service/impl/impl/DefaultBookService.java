@@ -75,6 +75,4 @@ public class DefaultBookService implements BookService {
 
         return (int)Math.ceil(count/pageSize);
     }
-
-
 }

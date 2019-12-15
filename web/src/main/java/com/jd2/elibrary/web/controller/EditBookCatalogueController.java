@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.awt.print.Pageable;
@@ -39,13 +40,15 @@ public class EditBookCatalogueController {
     }
 
     @PostMapping("/editBookCatalogue")
-    public String doPost(HttpServletRequest req){
+    public String doPost(HttpServletRequest req, @RequestParam("page") int pageNumber){
 
         if (req.getParameter("nextPage") != null) {
             pageNumber++;
             req.setAttribute("pageNumber", pageNumber);
             List<Book> books = bookService.paging(pageNumber, pageSize);
             req.setAttribute("books", books);
+            req.setAttribute("pageNumber", pageNumber);
+
         }
 
         if (req.getParameter("prevPage") != null) {

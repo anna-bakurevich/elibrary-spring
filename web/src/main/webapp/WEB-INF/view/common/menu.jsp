@@ -9,9 +9,9 @@
         <li><a href="${pageContext.request.contextPath}/">Домашняя страница</a></li>
 
         <%--       если пользователь не залогинился скрыть строку меню--%>
-        <%--        <c:if test="${login}!=null">--%>
+                <c:if test="${login != null}">
         <li><a href="${pageContext.request.contextPath}/registration">Регистрация</a></li>
-        <%--        </c:if>--%>
+                </c:if>
 
     </ul>
 
