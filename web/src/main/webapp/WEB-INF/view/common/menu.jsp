@@ -1,7 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" language="java" %>
 
 <div style="padding: 5px;">
 
@@ -11,9 +11,9 @@
         <li><a href="${pageContext.request.contextPath}/"><spring:message code="home"/></a></li>
 
         <%--       если пользователь не залогинился показать строку меню--%>
-        <c:if test="${login = null}">
+<%--        <c:if test="${login = null}">--%>
             <li><a href="${pageContext.request.contextPath}/registration"><spring:message code="registration.heading"/></a></li>
-        </c:if>
+<%--        </c:if>--%>
 
     </ul>
 
