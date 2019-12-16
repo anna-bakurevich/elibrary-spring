@@ -51,10 +51,9 @@ public class LoginController {
             req.setAttribute("error", "login or password invalid");
             return "registration";
         }
-        log.info("user {} logged", user.getLogin());
-        //как сохранить параметр для использования в .jsp
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
+        log.info("user {} logged", user.getLogin());
 
         if (user.getRole().equals(Role.LIBRARIAN)) {
             return "redirect:/librarianPage";

@@ -43,17 +43,20 @@
     </c:forEach>
 </table>
 
-<form method="post" action="${pageContext.request.contextPath}/editBookCatalogue">
-<%--    <input name="pageNumber" type="hidden" value="${pageNumber}">--%>
+<a href="${pageContext.request.contextPath}/editBookCatalogue?page=${page+1}">next</a>
+<a href="${pageContext.request.contextPath}/editBookCatalogue?page=${page-1}">previous</a>
 
-    <c:if test="${pageNumber>0}">
-        <input name="prevPage?page=${page-1}" type="submit" value=<spring:message code="button.prev"/>>
-    </c:if>
+<%--<form method="post" action="${pageContext.request.contextPath}/editBookCatalogue">--%>
+<%--&lt;%&ndash;    <input name="pageNumber" type="hidden" value="${pageNumber}">&ndash;%&gt;--%>
 
-    <c:if test="${pageNumber<maxNumber}">
-        <input name="nextPage?page=${page+1}" type="submit" value=<spring:message code="button.next"/>>
-    </c:if>
-</form>
+<%--    <c:if test="${page>0}">--%>
+<%--        <input name="prevPage?page=${page-1}" type="submit" value=<spring:message code="button.prev"/>>--%>
+<%--    </c:if>--%>
+
+<%--    <c:if test="${pageNumber<maxNumber}">--%>
+<%--        <input name="nextPage?page=${page+1}" type="submit" value=<spring:message code="button.next"/>>--%>
+<%--    </c:if>--%>
+<%--</form>--%>
 
 <br>
 <br>

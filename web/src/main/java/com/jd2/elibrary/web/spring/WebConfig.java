@@ -95,6 +95,4 @@ public class WebConfig {
         resolver.setCookieMaxAge(3600);
         return resolver;
     }
-
-
 }
