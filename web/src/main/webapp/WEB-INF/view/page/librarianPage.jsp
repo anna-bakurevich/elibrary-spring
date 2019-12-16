@@ -1,29 +1,23 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
-<fmt:setLocale value="${locale}"/>
-<fmt:setBundle basename="translations" var="messages"/>
 
 <head>
     <title>Librarian page</title>
 </head>
 
-
-<h1><fmt:message key="welcome.privatepage" bundle="${messages}"/>${login.firstName}!</h1>
-<a href="<spring:url value="/logout"/>"><fmt:message key="logout" bundle="${messages}"/></a>
-<a href="<spring:url value="/edit"/>"><fmt:message key="edit.heading" bundle="${messages}"/></a>
+<sec:authentication var = "librarian" property="principal"/>
+<h1><spring:message code="welcome.privatepage"/>${librarian.firstName}!</h1>
 
 <%--страница для библиотекаря--%>
 
-<h3><fmt:message key="user.list" bundle="${messages}"/></h3>
+<h3><spring:message code="user.list"/></h3>
 <table>
     <tr>
-        <th><fmt:message key="name" bundle="${messages}"/></th>
-        <th><fmt:message key="surname" bundle="${messages}"/></th>
-        <th><fmt:message key="phone" bundle="${messages}"/></th>
+        <th><spring:message code="name"/></th>
+        <th><spring:message code="surname"/></th>
+        <th><spring:message code="phone"/></th>
 
     </tr>
     <c:forEach items="${users}" var="user">
@@ -32,10 +26,10 @@
             <td>${user.lastName}</td>
             <td>${user.phone}</td>
             <td>
-                <c:if test="${login.id != user.id}">
+                <c:if test="${librarian.id != user.id}">
                     <form method="post" action="${pageContext.request.contextPath}/privatePage">
                         <input name="deleteId" type="hidden" value="${user.id}">
-                        <input type="submit" value=<fmt:message key="delete" bundle="${messages}"/>>
+                        <input type="submit" value=<spring:message code="delete"/>>
                     </form>
                 </c:if>
             </td>
@@ -43,7 +37,7 @@
         </tr>
     </c:forEach>
 </table>
-<a href="<spring:url value="/editBookCatalogue"/>"><fmt:message key="edit.catalogue" bundle="${messages}"/></a>
+<a href="<spring:url value="/editBookCatalogue"/>"><spring:message code="edit.catalogue"/></a>
 
 
 

@@ -6,14 +6,12 @@
 <div style="padding: 5px;">
 
     <ul>
-        <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=ru" style="padding: 5px">RU</a>
-        <a href="${requestScope['javax.servlet.forward.request_uri']}?locale=en" style="padding: 5px">EN</a>
-        <li><a href="${pageContext.request.contextPath}/"><spring:message code="home"/></a></li>
-
         <%--       если пользователь не залогинился показать строку меню--%>
-<%--        <c:if test="${login = null}">--%>
-            <li><a href="${pageContext.request.contextPath}/registration"><spring:message code="registration.heading"/></a></li>
-<%--        </c:if>--%>
+        <c:if test="${login = null}">
+        </c:if>
+        <li><a href="${pageContext.request.contextPath}/registration"><spring:message code="registration.heading"/></a></li>
+        <li><a href="${pageContext.request.contextPath}/logout"><spring:message code="logout"/></a></li>
+        <li><a href="${pageContext.request.contextPath}/edit"><spring:message code="edit.heading"/></a></li>
 
     </ul>
 

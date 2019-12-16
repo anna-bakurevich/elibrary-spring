@@ -39,10 +39,6 @@ public class WebConfig {
         return new EditController(serviceConfig.userService());
     }
 
-    @Bean
-    public IndexController indexController() {
-        return new IndexController();
-    }
 
     @Bean
     public LibrarianPageController librarianPageController() {
@@ -56,7 +52,7 @@ public class WebConfig {
 
     @Bean
     public LogoutController logoutController() {
-        return new LogoutController();
+        return new LogoutController(serviceConfig.userService());
     }
 
     @Bean

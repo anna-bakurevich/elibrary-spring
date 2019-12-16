@@ -3,6 +3,7 @@ package com.jd2.elibrary.web.controller;
 import com.jd2.elibrary.model.Role;
 import com.jd2.elibrary.model.User;
 import com.jd2.elibrary.service.impl.UserService;
+import com.jd2.elibrary.web.Util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -33,9 +34,9 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String doGet(HttpSession session) {
-        Object authUser = session.getAttribute("login");
-        if (authUser == null) {
+    public String doGet() {
+        Object authUserDetails = Util.getCurrentUserDetails();
+        if (authUserDetails == "anonymousUser") {
             return "login";
         }
         return "redirect:/customerPage";
@@ -52,7 +53,6 @@ public class LoginController {
         }
         log.info("user {} logged", user.getLogin());
         //как сохранить параметр для использования в .jsp
-        req.getSession().setAttribute("login", user);
         Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
 

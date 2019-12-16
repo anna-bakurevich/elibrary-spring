@@ -1,31 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-
-<fmt:setLocale value="${locale}"/>
-<fmt:setBundle basename="translations" var="messages"/>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <head>
     <title>Customer page</title>
 </head>
 
 <%--где взять имя пользователя?--%>
-<h1><fmt:message key="welcome.privatepage" bundle="${messages}"/>${login.firstName}!</h1>
-
-<a href="<spring:url value="/logout"/>"><fmt:message key="logout" bundle="${messages}"/></a>
-<a href="<spring:url value="/edit"/>"><fmt:message key="edit.heading" bundle="${messages}"/></a>
+<sec:authentication var = "user" property="principal"/>
+<h1><spring:message code="welcome.privatepage"/>${user.firstName}!</h1>
 
 
-<h3><fmt:message key="catalogue" bundle="${messages}"/></h3>
+<a href="<spring:url value="/logout"/>"><spring:message code="logout"/></a>
+<a href="<spring:url value="/edit"/>"><spring:message code="edit.heading"/></a>
+
+
+<h3><spring:message code="catalogue"/></h3>
 <table>
     <tr>
-        <th><fmt:message key="name.author" bundle="${messages}"/></th>
-        <th><fmt:message key="surname.author" bundle="${messages}"/></th>
-        <th><fmt:message key="title" bundle="${messages}"/></th>
-        <th><fmt:message key="genre" bundle="${messages}"/></th>
-        <th><fmt:message key="quantity" bundle="${messages}"/></th>
+        <th><spring:message code="name.author"/></th>
+        <th><spring:message code="surname.author"/></th>
+        <th><spring:message code="title"/></th>
+        <th><spring:message code="genre"/></th>
+        <th><spring:message code="quantity"/></th>
 
     </tr>
     <c:forEach items="${books}" var="book">
@@ -38,7 +37,7 @@
                 <td>
                     <form method="post" action="${pageContext.request.contextPath}/customerPage">
                         <input name="bookToOrder" type="hidden" value="${book.id}">
-                        <input type="submit" value=<fmt:message key="order" bundle="${messages}"/>>
+                        <input type="submit" value=<spring:message code="order"/>>
                     </form>
                 </td>
             </tr>
@@ -49,11 +48,11 @@
     <input name="pageNumber" type="hidden" value="${pageNumber}">
 
     <c:if test="${pageNumber>0}">
-        <input name="prevPage" type="submit" value=<fmt:message key="button.prev" bundle="${messages}"/>>
+        <input name="prevPage" type="submit" value=<spring:message code="button.prev"/>>
     </c:if>
 
     <c:if test="${pageNumber<maxNumber}">
-        <input name="nextPage" type="submit" value=<fmt:message key="button.next" bundle="${messages}"/>>
+        <input name="nextPage" type="submit" value=<spring:message code="button.next"/>>
     </c:if>
 </form>
-<a href="<spring:url value="/orderPage"/>"><fmt:message key="order.heading" bundle="${messages}"/></a>
+<a href="<spring:url value="/orderPage"/>"><spring:message code="order.heading"/></a>

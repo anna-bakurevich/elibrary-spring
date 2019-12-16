@@ -1,22 +1,31 @@
 package com.jd2.elibrary.web.controller;
 
+import com.jd2.elibrary.service.impl.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping
 public class LogoutController {
+    private final UserService userService;
+
+    public LogoutController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/logout")
    public String doGet(HttpServletRequest req) {
-        //удаление объекта с указанным именем из сессии
-        req.getSession().removeAttribute("login");
-        //установка сессии недействительной и отмена привязки объектов, связанных с ней
-        req.getSession().invalidate();
-        //перенаправление на страницу логина
+        SecurityContextHolder.clearContext();
+        try {
+            req.logout();
+        } catch (ServletException e) {
+            throw new RuntimeException();
+        }
         return "login";
     }
 }
