@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class DefaultBookDao implements BookDao {
     private final BookJpaRepository bookJpaRepository;
@@ -60,9 +61,11 @@ public class DefaultBookDao implements BookDao {
     }
 
     @Override
-    public List<Book> paging(int pageNumber, int size) {
+    public List<Book> paging(int pageNumber) {
+        ResourceBundle resource = ResourceBundle.getBundle("methodConst");
+        int pageSize = Integer.parseInt(resource.getString("pageSize"));
         Page<BookEntity> booksPage = bookJpaRepository.findAll(PageRequest.of(
-                pageNumber, size, Sort.by("title")));
+                pageNumber, pageSize, Sort.by("title")));
         List<BookEntity> books = booksPage.getContent();
         return BookConverter.convertToListBook(books);
     }

@@ -26,54 +26,49 @@ public class EditBookCatalogueController {
         this.bookService = bookService;
     }
 
-    private int pageSize = 2;
-
     @GetMapping("/editBookCatalogue")
-    public String doGet(HttpServletRequest req){
-        int page = setPage(req);
-        List<Book> books = bookService.paging(page, pageSize);
-        int maxNumber = bookService.countPageBooks(pageSize)-1;
+    public String doGet(HttpServletRequest req) {
+        int page = 0;
+        if (req.getParameter("page") != null) {
+            page = Integer.parseInt(req.getParameter("page"));
+        }
+        List<Book> books = bookService.paging(page);
+        int maxNumber = bookService.countPageBooks() - 1;
         req.setAttribute("books", books);
         req.setAttribute("maxNumber", maxNumber);
         req.setAttribute("page", page);
         return "editBookCatalogue";
     }
 
-    private int setPage(HttpServletRequest req) {
-        if(req.getParameter("page") == null ){
-            return 0;
-        }else{
-            return Integer.parseInt(req.getParameter("page"));
-        }
-    }
-
     @PostMapping("/editBookCatalogue")
-    //добавляеем параметр page
-    public String nextPage(HttpServletRequest req, @RequestParam("page") int page) {
+    public String page(HttpServletRequest req, @RequestParam("page") int page) {
         req.setAttribute("page", page);
-        List<Book> books = bookService.paging(page, pageSize);
+        List<Book> books = bookService.paging(page);
         req.setAttribute("books", books);
         return "editBookCatalogue";
+    }
 
-//        if (req.getParameter("prevPage") != null) {
-//            pageNumber--;
-//            req.setAttribute("pageNumber", pageNumber);
-//            List<Book> books = bookService.paging(pageNumber, pageSize);
-//            req.setAttribute("books", books);
-//        }
-//        if (req.getParameter("bookDelete") != null) {
-//            int bookDelete = Integer.parseInt(req.getParameter("bookDelete"));
-//            int countDelete = Integer.parseInt(req.getParameter("countDelete"));
-//            bookService.decrCountBook(bookDelete, countDelete);
-//            log.info("book {} decreased by {}", bookDelete, countDelete);
-//        }
-//        if (req.getParameter("bookAdd") != null) {
-//            int bookAdd = Integer.parseInt(req.getParameter("bookAdd"));
-//            int countAdd = Integer.parseInt(req.getParameter("countAdd"));
-//            bookService.incrCountBook(bookAdd, countAdd);
-//            log.info("book {} increased by {}", bookAdd, countAdd);
-//        }
-//        return "redirect:/editBookCatalogue";
-//    }
+    @PostMapping("/bookDelete")
+    public String bookDelete(HttpServletRequest req) {
+        int bookDelete = Integer.parseInt(req.getParameter("bookDelete"));
+        int countDelete = Integer.parseInt(req.getParameter("countDelete"));
+        bookService.decrCountBook(bookDelete, countDelete);
+        log.info("book {} decreased by {}", bookDelete, countDelete);
+        return "redirect:/editBookCatalogue";
+    }
+
+
+
+    @PostMapping("/bookAdd")
+    public String bookAdd(HttpServletRequest req) {
+        if (req.getParameter("bookAdd") != null) {
+            int bookAdd = Integer.parseInt(req.getParameter("bookAdd"));
+            int countAdd = Integer.parseInt(req.getParameter("countAdd"));
+            bookService.incrCountBook(bookAdd, countAdd);
+            log.info("book {} increased by {}", bookAdd, countAdd);
+        }
+        return "redirect:/editBookCatalogue";
     }
 }
+
+

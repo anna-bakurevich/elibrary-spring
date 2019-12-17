@@ -79,7 +79,7 @@ public class DefaultBookDaoTest {
     @Transactional
     @Test
     void pagingTest() {
-        List<Book> books = dao.paging(0,2);
+        List<Book> books = dao.paging(0);
         for (Book b : books) {
             System.out.println(b.getTitle());
         }

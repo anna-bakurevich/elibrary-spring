@@ -8,13 +8,8 @@
     <title>Customer page</title>
 </head>
 
-<%--где взять имя пользователя?--%>
 <sec:authentication var = "user" property="principal"/>
 <h1><spring:message code="welcome.privatepage"/>${user.firstName}!</h1>
-
-
-<a href="<spring:url value="/logout"/>"><spring:message code="logout"/></a>
-<a href="<spring:url value="/edit"/>"><spring:message code="edit.heading"/></a>
 
 
 <h3><spring:message code="catalogue"/></h3>
@@ -44,15 +39,12 @@
     </c:forEach>
 </table>
 
-<form method="post" action="${pageContext.request.contextPath}/customerPage">
-    <input name="pageNumber" type="hidden" value="${pageNumber}">
-
-    <c:if test="${pageNumber>0}">
-        <input name="prevPage" type="submit" value=<spring:message code="button.prev"/>>
-    </c:if>
-
-    <c:if test="${pageNumber<maxNumber}">
-        <input name="nextPage" type="submit" value=<spring:message code="button.next"/>>
-    </c:if>
-</form>
+<c:if test="${page>0}">
+    <a href="${pageContext.request.contextPath}/editBookCatalogue?page=${page-1}"><spring:message code="prevPage"/></a>
+</c:if>
+<c:if test="${page<maxNumber}">
+    <a href="${pageContext.request.contextPath}/editBookCatalogue?page=${page+1}"><spring:message code="nextPage"/></a>
+</c:if>
+<br>
+<br>
 <a href="<spring:url value="/orderPage"/>"><spring:message code="order.heading"/></a>

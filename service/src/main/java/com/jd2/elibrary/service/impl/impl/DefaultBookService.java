@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 @Service
 public class DefaultBookService implements BookService {
@@ -24,8 +25,8 @@ public class DefaultBookService implements BookService {
 
     @Override
     @Transactional
-    public List<Book> paging(int pageNumber, int pageSize) {
-        return defaultBookDao.paging(pageNumber, pageSize);
+    public List<Book> paging(int pageNumber) {
+        return defaultBookDao.paging(pageNumber);
     }
 
 
@@ -70,9 +71,10 @@ public class DefaultBookService implements BookService {
 
     @Override
     @Transactional
-    public int countPageBooks(int pageSize) {
+    public int countPageBooks() {
         int count = defaultBookDao.count();
-
+        ResourceBundle resource = ResourceBundle.getBundle("methodConst");
+        int pageSize = Integer.parseInt(resource.getString("pageSize"));
         return (int)Math.ceil(count/pageSize);
     }
 }

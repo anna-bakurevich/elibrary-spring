@@ -14,7 +14,7 @@ public interface BookDao {
 
     List<Book> findAll();
 
-    List<Book> paging(int pageNumber, int size);
+    List<Book> paging(int pageNumber);
 
     Book findById(int id);
 
