@@ -58,7 +58,6 @@ public class EditBookCatalogueController {
     }
 
 
-
     @PostMapping("/bookAdd")
     public String bookAdd(HttpServletRequest req) {
         if (req.getParameter("bookAdd") != null) {

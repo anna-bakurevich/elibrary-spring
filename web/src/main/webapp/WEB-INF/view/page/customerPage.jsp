@@ -29,21 +29,23 @@
                 <td>${book.title}</td>
                 <td>${book.genre}</td>
                 <td align = "center">${book.count}</td>
+                <c:if test="${book.count>0}">
                 <td>
-                    <form method="post" action="${pageContext.request.contextPath}/customerPage">
+                    <form method="post" action="${pageContext.request.contextPath}/order">
                         <input name="bookToOrder" type="hidden" value="${book.id}">
                         <input type="submit" value=<spring:message code="order"/>>
                     </form>
                 </td>
+                </c:if>
             </tr>
     </c:forEach>
 </table>
 
 <c:if test="${page>0}">
-    <a href="${pageContext.request.contextPath}/editBookCatalogue?page=${page-1}"><spring:message code="prevPage"/></a>
+    <a href="${pageContext.request.contextPath}/customerPage?page=${page-1}"><spring:message code="prevPage"/></a>
 </c:if>
 <c:if test="${page<maxNumber}">
-    <a href="${pageContext.request.contextPath}/editBookCatalogue?page=${page+1}"><spring:message code="nextPage"/></a>
+    <a href="${pageContext.request.contextPath}/customerPage?page=${page+1}"><spring:message code="nextPage"/></a>
 </c:if>
 <br>
 <br>

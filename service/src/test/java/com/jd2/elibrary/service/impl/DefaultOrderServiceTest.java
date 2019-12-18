@@ -58,7 +58,7 @@ public class DefaultOrderServiceTest {
     }
 
     @Test
-    void getOrderFilledByUserIdTest() {
+    void findOrderFilledByUserIdTest() {
         Order orderFilled = new Order();
         orderFilled.setOrderStatus(OrderStatus.FILLED);
         List<Order> orders = Arrays.asList(orderFilled);

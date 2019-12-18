@@ -82,8 +82,9 @@ public class DefaultOrderDaoTest {
     @Test
     void findOrderByOrderStatusAndUserTest() {
         List<Order> ordersFilled = orderDao.findOrderByOrderStatusAndUser(OrderStatus.FILLED, 4);
-        System.out.println(ordersFilled.get(0).getUser().getFirstName());
-
+        assertNotNull(ordersFilled);
+        assertEquals(1, ordersFilled.size());
+        assertEquals("Иван", ordersFilled.get(0).getUser().getFirstName());
     }
 
     @Transactional
@@ -99,15 +100,6 @@ public class DefaultOrderDaoTest {
     void existByUserTest() {
         User user = userDao.findById(4);
         assertTrue(orderDao.existByUser(user));
-    }
-
-    @Transactional
-    @Test
-    void deleteBookFromOrderTest(){
-        Order order = orderDao.findOrderByOrderStatusAndUser(OrderStatus.FILLED, 4).get(0);
-        System.out.println(orderDao.getBooksByOrderId(order.getId()).size());
-        orderDao.deleteBookFromOrder(order.getId(), 318);
-        System.out.println(orderDao.getBooksByOrderId(order.getId()).size());
     }
 
 

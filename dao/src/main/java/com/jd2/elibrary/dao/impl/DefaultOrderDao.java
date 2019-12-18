@@ -99,18 +99,26 @@ public class DefaultOrderDao implements OrderDao {
     @Override
     public void addBookToOrder(Order order, int bookId) {
         List<Book> books = getBooksByOrderId(order.getId());
-        System.out.println("Список книг в заказе " + books);
         BookEntity bookEntity = bookJpaRepository.findById(bookId).get();
         books.add(BookConverter.convertToBook(bookEntity));
+        System.out.println("РАЗМЕР BOOKS " + books.size());
+        System.out.println(books);
         OrderEntity orderEntity = OrderConverter.convertToOrderEntity(order);
         orderEntity.setBooksInOrder(BookConverter.convertToListBookEntity(books));
         orderJpaRepository.save(orderEntity);
-        System.out.println("Список книг в заказе после добавления " + orderJpaRepository.findById(order.getId()).get().getBooksInOrder());
     }
 
     @Override
     public void deleteBookFromOrder(int orderId, int bookId) {
-
+        List<Book> books = getBooksByOrderId(orderId);
+        BookEntity bookEntity = bookJpaRepository.findById(bookId).get();
+        System.out.println("books.indexOf " + books.indexOf(BookConverter.convertToBook(bookEntity)));
+        books.remove(BookConverter.convertToBook(bookEntity));
+        System.out.println("РАЗМЕР BOOKS " + books.size());
+        System.out.println(books);
+        OrderEntity orderEntity = orderJpaRepository.findById(orderId).get();
+        orderEntity.setBooksInOrder(BookConverter.convertToListBookEntity(books));
+        orderJpaRepository.save(orderEntity);
     }
 
     @Override

@@ -6,8 +6,12 @@ import com.jd2.elibrary.model.OrderStatus;
 import com.jd2.elibrary.model.User;
 import com.jd2.elibrary.service.impl.BookService;
 import com.jd2.elibrary.service.impl.OrderService;
+import com.jd2.elibrary.service.impl.UserService;
+import com.jd2.elibrary.web.Util;
+import com.sun.xml.internal.ws.encoding.soap.SOAP12Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,8 +38,6 @@ public class CustomerPageController {
         this.bookService = bookService;
         this.orderService = orderService;
     }
-
-    private int pageNumber = 0;
 
     @GetMapping("/customerPage")
     public String doGet(HttpServletRequest req) {
@@ -59,50 +62,45 @@ public class CustomerPageController {
     }
 
 
-//    @PostMapping(("/customerPage"))
-//    public String order(HttpServletRequest req) {
-//        if (req.getParameter("bookToOrder") != null) {
-//            int bookToOrder = Integer.parseInt(req.getParameter("bookToOrder"));
-//            int count = bookService.findById(bookToOrder).getCount();
-//            User user = (User) req.getSession().getAttribute("login");
-//            //пытаемся получить оформляющийся заказ
-//            Order orderFilled = orderService.findOrderFilledByUserId(user.getId());
-//
-//            //если книга имеется в наличии
-//            if (count > 0) {
-//                //если уже есть заказ со статусом "оформляется"
-//                if (orderFilled != null) {
-//                    //если такая книга уже есть в заказе
-//                    if (orderService.existBookInOrder(orderFilled.getId(), bookToOrder)) {
-//                        //вывести сообщение о наличии книги в заказе
-//                        return "customerPage";
-//                    }
-//                    //иначе добавляем в него книгу по bookId (обновляем заказ)
-//                    orderService.addBookToOrder(orderFilled, bookToOrder);
-//                    log.info("user {} added book {} to order {} at {}", user.getId(), bookToOrder,
-//                            orderFilled.getId(), LocalDateTime.now());
-//                    //уменьшаем в каталоге кол-во этой книги на 1
-//                    bookService.decrCountBook(bookToOrder, 1);
-//                    return "redirect:/customerPage";
-//                }
-//            }
-//            //иначе создаем новый заказ и добавляем в него книгу
-//            orderFilled = new Order();
-//            orderFilled.setUser(user);
-//            orderFilled.setOrderDate(LocalDate.now());
-//            orderFilled.setReturnDate(LocalDate.now().plusDays(30));
-//            orderFilled.setOrderStatus(OrderStatus.FILLED);
-//            orderService.save(orderFilled);
-//            Order order = orderService.findOrderFilledByUserId(user.getId());
-//            log.info("user {} created order {} at {}", user.getId(), order.getId(), LocalDateTime.now());
-//            //добавляем книгу в новый заказ
-//            orderService.addBookToOrder(order, bookToOrder);
-//            //уменьшаем в каталоге кол-во этой книги на 1
-//            bookService.decrCountBook(bookToOrder, 1);
-//            return "redirect:/customerPage";
-//        }
-//        //вывести сообщение о недоступности книги для заказа
-//        return "redirect:/customerPage";
-//    }
+    @PostMapping("/order")
+    public String order(HttpServletRequest req, UsernamePasswordAuthenticationToken principal) {
+        if (req.getParameter("bookToOrder") != null) {
+            int bookToOrder = Integer.parseInt(req.getParameter("bookToOrder"));
+          User user = (User) principal.getPrincipal();
+            //пытаемся получить оформляющийся заказ
+            Order orderFilled = orderService.findOrderFilledByUserId(user.getId());
+            //если уже есть заказ со статусом "оформляется"
+            if (orderFilled != null) {
+                //если такая книга уже есть в заказе
+                if (orderService.existBookInOrder(orderFilled.getId(), bookToOrder)) {
+                    //вывести сообщение о наличии книги в заказе
+                    return "customerPage";
+                }
+                //иначе добавляем в него книгу по bookId (обновляем заказ)
+                orderService.addBookToOrder(orderFilled, bookToOrder);
+                log.info("user {} added book {} to order {} at {}", user.getId(), bookToOrder,
+                        orderFilled.getId(), LocalDateTime.now());
+                //уменьшаем в каталоге кол-во этой книги на 1
+                bookService.decrCountBook(bookToOrder, 1);
+                return "redirect:/customerPage";
+            }
+
+            //иначе создаем новый заказ и добавляем в него книгу
+            orderFilled = new Order();
+            orderFilled.setUser(user);
+            orderFilled.setOrderDate(LocalDate.now());
+            orderFilled.setReturnDate(LocalDate.now().plusDays(30));
+            orderFilled.setOrderStatus(OrderStatus.FILLED);
+            orderService.save(orderFilled);
+            Order order = orderService.findOrderFilledByUserId(user.getId());
+            log.info("user {} created order {} at {}", user.getId(), order.getId(), LocalDateTime.now());
+            //добавляем книгу в новый заказ
+            orderService.addBookToOrder(order, bookToOrder);
+            //уменьшаем в каталоге кол-во этой книги на 1
+            bookService.decrCountBook(bookToOrder, 1);
+            return "redirect:/customerPage";
+        }
+        return "redirect:/customerPage";
+ }
 }
 

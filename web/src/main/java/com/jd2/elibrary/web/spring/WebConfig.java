@@ -62,7 +62,7 @@ public class WebConfig {
 
     @Bean
     OrderPageController orderPageController() {
-        return new OrderPageController(serviceConfig.orderService(), serviceConfig.bookService());
+        return new OrderPageController(serviceConfig.orderService());
     }
 
     @Bean
