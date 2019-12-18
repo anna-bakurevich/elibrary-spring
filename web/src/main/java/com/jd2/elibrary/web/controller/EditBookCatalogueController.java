@@ -50,23 +50,25 @@ public class EditBookCatalogueController {
 
     @PostMapping("/bookDelete")
     public String bookDelete(HttpServletRequest req) {
+        String p = req.getParameter("page");
         int bookDelete = Integer.parseInt(req.getParameter("bookDelete"));
         int countDelete = Integer.parseInt(req.getParameter("countDelete"));
         bookService.decrCountBook(bookDelete, countDelete);
         log.info("book {} decreased by {}", bookDelete, countDelete);
-        return "redirect:/editBookCatalogue";
+        return "redirect:/editBookCatalogue?page=" + p;
     }
 
 
     @PostMapping("/bookAdd")
     public String bookAdd(HttpServletRequest req) {
+        String p = req.getParameter("page");
         if (req.getParameter("bookAdd") != null) {
             int bookAdd = Integer.parseInt(req.getParameter("bookAdd"));
             int countAdd = Integer.parseInt(req.getParameter("countAdd"));
             bookService.incrCountBook(bookAdd, countAdd);
             log.info("book {} increased by {}", bookAdd, countAdd);
         }
-        return "redirect:/editBookCatalogue";
+        return "redirect:/editBookCatalogue?page=" + p;
     }
 }
 

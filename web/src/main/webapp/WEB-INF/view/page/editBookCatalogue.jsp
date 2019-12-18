@@ -26,13 +26,13 @@
             <td>${book.genre}</td>
             <td align="center">${book.count}</td>
             <td>
-                <form method="post" action="${pageContext.request.contextPath}/bookDelete">
+                <form method="post" action="${pageContext.request.contextPath}/bookDelete?page=${page}">
                     <input name="bookDelete" type="hidden" value="${book.id}">
                     <input type="submit" style="height: 22px; width: 75px;"
                            value=<spring:message code="delete"/>>
                     <input name="countDelete" type="number" value=0 min=0 style="width: 40px">
                 </form>
-                <form method="post" action="${pageContext.request.contextPath}/bookAdd">
+                <form method="post" action="${pageContext.request.contextPath}/bookAdd?page=${page}">
                     <input name="bookAdd" type="hidden" value="${book.id}">
                     <input type="submit" style="height: 22px; width: 75px;"
                            value=<spring:message code="add"/>>

@@ -28,7 +28,7 @@
             <td>${user.phone}</td>
             <td>
                 <c:if test="${librarian.id != user.id}">
-                    <form method="post" action="${pageContext.request.contextPath}/privatePage">
+                    <form method="post" action="${pageContext.request.contextPath}/librarianPage">
                         <input name="deleteId" type="hidden" value="${user.id}">
                         <input type="submit" value=<spring:message code="delete"/>>
                     </form>

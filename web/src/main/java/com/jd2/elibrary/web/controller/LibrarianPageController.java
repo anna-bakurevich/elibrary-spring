@@ -37,6 +37,6 @@ public class LibrarianPageController {
             userService.deleteById(userId);
             log.info("user {} deleted", userId);
         }
-        return "ibrarianPage";
+        return "redirect:librarianPage";
     }
 }
