@@ -102,5 +102,15 @@ public class DefaultOrderDaoTest {
         assertTrue(orderDao.existByUser(user));
     }
 
+    @Transactional
+    @Test
+    void deleteBookFromOrderTest(){
+        Order order = orderDao.findByOrderStatus(OrderStatus.FILLED);
+        int orderId = order.getId();
+        int bookId = orderDao.getBooksByOrderId(orderId).get(0).getId();
+        orderDao.deleteBookFromOrder(orderId, bookId);
+       assertFalse(orderDao.existBookInOrder(orderId, bookId));
+    }
+
 
 }
