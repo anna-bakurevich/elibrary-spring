@@ -112,10 +112,12 @@ public class DefaultOrderDao implements OrderDao {
     public void deleteBookFromOrder(int orderId, int bookId) {
         List<Book> books = getBooksByOrderId(orderId);
         BookEntity bookEntity = bookJpaRepository.findById(bookId).get();
-        System.out.println("books.indexOf " + books.indexOf(BookConverter.convertToBook(bookEntity)));
-        books.remove(BookConverter.convertToBook(bookEntity));
-        System.out.println("РАЗМЕР BOOKS " + books.size());
-        System.out.println(books);
+        for (Book book:books) {
+            if (book.getId() == bookEntity.getId()){
+                books.remove(book);
+                break;
+            }
+        }
         OrderEntity orderEntity = orderJpaRepository.findById(orderId).get();
         orderEntity.setBooksInOrder(BookConverter.convertToListBookEntity(books));
         orderJpaRepository.save(orderEntity);
