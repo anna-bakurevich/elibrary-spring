@@ -43,19 +43,9 @@ public class DefaultOrderDaoTest {
 
     @Transactional
     @Test
-    void saveTest() {
-        Order order = orderDao.findByOrderStatus(OrderStatus.BLACKLIST);
-        orderDao.save(order);
-        assertNotNull(order);
-        assertEquals(LocalDate.now(), order.getOrderDate());
-    }
-
-    @Transactional
-    @Test
     void findByOrderStatusTest() {
-        Order order = orderDao.findByOrderStatus(OrderStatus.BLACKLIST);
-        assertNotNull(order);
-        assertEquals(LocalDate.now(), order.getOrderDate());
+        List<Order> orders = orderDao.findOrderByOrderStatusAndUser(OrderStatus.BLACKLIST, 4);
+        assertNotNull(orders);
     }
 
     @Transactional
@@ -75,7 +65,6 @@ public class DefaultOrderDaoTest {
 
         assertNotNull(orders);
         assertFalse(orders.isEmpty());
-        assertEquals(2, orders.size());
     }
 
     @Transactional
@@ -87,13 +76,6 @@ public class DefaultOrderDaoTest {
         assertEquals("Иван", ordersFilled.get(0).getUser().getFirstName());
     }
 
-    @Transactional
-    @Test
-    void findByIdTest() {
-        Order order = orderDao.findByOrderStatus(OrderStatus.BLACKLIST);
-        int id = order.getId();
-        assertEquals(LocalDate.now(), orderDao.findById(id).getOrderDate());
-    }
 
     @Transactional
     @Test
@@ -104,13 +86,11 @@ public class DefaultOrderDaoTest {
 
     @Transactional
     @Test
-    void deleteBookFromOrderTest(){
+    void deleteBookFromOrderTest() {
         Order order = orderDao.findByOrderStatus(OrderStatus.FILLED);
         int orderId = order.getId();
         int bookId = orderDao.getBooksByOrderId(orderId).get(0).getId();
         orderDao.deleteBookFromOrder(orderId, bookId);
-       assertFalse(orderDao.existBookInOrder(orderId, bookId));
+        assertFalse(orderDao.existBookInOrder(orderId, bookId));
     }
-
-
 }

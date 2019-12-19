@@ -40,16 +40,24 @@ public class CustomerPageController {
     }
 
     @GetMapping("/customerPage")
-    public String doGet(HttpServletRequest req) {
+    public String doGet(HttpServletRequest req,  UsernamePasswordAuthenticationToken principal) {
         int page = 0;
         if (req.getParameter("page") != null) {
             page = Integer.parseInt(req.getParameter("page"));
         }
         List<Book> books = bookService.paging(page);
         int maxNumber = bookService.countPageBooks() - 1;
+
         req.setAttribute("books", books);
         req.setAttribute("maxNumber", maxNumber);
         req.setAttribute("page", page);
+        req.setAttribute("order", true);
+        User user = (User) principal.getPrincipal();
+        Order orderFilled = orderService.findOrderFilledByUserId(user.getId());
+        if (orderFilled == null){
+            req.setAttribute("order", false);
+            return "customerPage";
+        }
         return "customerPage";
     }
 
@@ -66,14 +74,15 @@ public class CustomerPageController {
     public String order(HttpServletRequest req, UsernamePasswordAuthenticationToken principal) {
         if (req.getParameter("bookToOrder") != null) {
             int bookToOrder = Integer.parseInt(req.getParameter("bookToOrder"));
-          User user = (User) principal.getPrincipal();
+            User user = (User) principal.getPrincipal();
             //пытаемся получить оформляющийся заказ
             Order orderFilled = orderService.findOrderFilledByUserId(user.getId());
             //если уже есть заказ со статусом "оформляется"
             if (orderFilled != null) {
+
                 //если такая книга уже есть в заказе
                 if (orderService.existBookInOrder(orderFilled.getId(), bookToOrder)) {
-                    //вывести сообщение о наличии книги в заказе
+                    req.setAttribute("existBookInOrder", true);
                     return "customerPage";
                 }
                 //иначе добавляем в него книгу по bookId (обновляем заказ)
@@ -82,7 +91,9 @@ public class CustomerPageController {
                         orderFilled.getId(), LocalDateTime.now());
                 //уменьшаем в каталоге кол-во этой книги на 1
                 bookService.decrCountBook(bookToOrder, 1);
-                return "redirect:/customerPage";
+                req.setAttribute("existBookInOrder", true);
+                String p = req.getParameter("page");
+                return "redirect:/customerPage?page=" + p;
             }
 
             //иначе создаем новый заказ и добавляем в него книгу
@@ -98,9 +109,19 @@ public class CustomerPageController {
             orderService.addBookToOrder(order, bookToOrder);
             //уменьшаем в каталоге кол-во этой книги на 1
             bookService.decrCountBook(bookToOrder, 1);
-            return "redirect:/customerPage";
+            String p = req.getParameter("page");
+            return "redirect:/customerPage?page=" + p;
         }
-        return "redirect:/customerPage";
- }
+        String p = req.getParameter("page");
+        return "redirect:/customerPage?page=" + p;
+    }
+
+    @PostMapping("/confirm")
+    public String confirm(HttpServletRequest req, UsernamePasswordAuthenticationToken principal){
+        User user = (User) principal.getPrincipal();
+        Order orderFilled = orderService.findOrderFilledByUserId(user.getId());
+        orderService.updateOrderStatus(orderFilled, OrderStatus.FORMED);
+        return "customerPage";
+    }
 }
 

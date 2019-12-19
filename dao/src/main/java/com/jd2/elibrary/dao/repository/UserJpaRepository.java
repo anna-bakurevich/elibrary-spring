@@ -21,4 +21,5 @@ public interface UserJpaRepository extends JpaRepository<UserEntity, Integer> {
     @Transactional
     @Query(value = "select ue.id from UserEntity as ue where ue.login=:login")
     int getIdByLogin(@Param("login") String login);
+
 }

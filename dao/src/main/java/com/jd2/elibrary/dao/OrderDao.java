@@ -36,6 +36,7 @@ public interface OrderDao {
     void addBookToOrder(Order order, int bookId);
     //удаление книги из заказа по bookId
     void deleteBookFromOrder(int orderId, int bookId);
+    void updateOrderStatus(Order order, OrderStatus status);
 
     //delete
     void deleteById(int id);

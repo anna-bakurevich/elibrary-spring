@@ -45,9 +45,13 @@ public class DefaultOrderService implements OrderService {
     }
 
     @Override
+    public void updateOrderStatus(Order order, OrderStatus status) {
+        defaultOrderDao.updateOrderStatus(order, status);
+    }
+
+    @Override
     @Transactional
     public List<Book> getBooksByOrderId(int orderId) {
-        defaultOrderDao.getBooksByOrderId(orderId);
         return defaultOrderDao.getBooksByOrderId(orderId);
     }
 
@@ -77,6 +81,9 @@ public class DefaultOrderService implements OrderService {
     @Override
     @Transactional
     public Order findOrderFilledByUserId(int userId) {
+        if (defaultOrderDao.findOrderByOrderStatusAndUser(OrderStatus.FILLED, userId) == null) {
+            return null;
+        }
         return defaultOrderDao.findOrderByOrderStatusAndUser(OrderStatus.FILLED, userId).get(0);
     }
 

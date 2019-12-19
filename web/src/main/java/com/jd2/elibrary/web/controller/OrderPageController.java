@@ -28,8 +28,15 @@ public class OrderPageController {
     @GetMapping("/orderPage")
     public String doGet(HttpServletRequest req, UsernamePasswordAuthenticationToken principal) {
         User user = (User) principal.getPrincipal();
+        if (orderService.findOrderFilledByUserId(user.getId()) == null) {
+            return "redirect:/customerPage";
+        }
         int orderId = orderService.findOrderFilledByUserId(user.getId()).getId();
         List<Book> booksInOrder = orderService.getBooksByOrderId(orderId);
+        if (booksInOrder.isEmpty()){
+            req.setAttribute("booksInOrderIsEmpty", true);
+            return "orderPage";
+        }
         req.setAttribute("booksInOrder", booksInOrder);
         return "orderPage";
     }

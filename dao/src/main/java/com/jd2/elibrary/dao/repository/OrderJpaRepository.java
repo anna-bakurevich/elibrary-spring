@@ -4,6 +4,7 @@ import com.jd2.elibrary.dao.entity.BookEntity;
 import com.jd2.elibrary.dao.entity.OrderEntity;
 import com.jd2.elibrary.dao.entity.UserEntity;
 import com.jd2.elibrary.model.Book;
+import com.jd2.elibrary.model.Order;
 import com.jd2.elibrary.model.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,5 +22,6 @@ public interface OrderJpaRepository extends JpaRepository<OrderEntity, Integer> 
     List<OrderEntity> findOrderEntitiesByOrderStatusAndUserEntity(OrderStatus orderStatus, UserEntity userEntity);
 
     boolean existsByUserEntity(UserEntity userEntity);
+
 
 }

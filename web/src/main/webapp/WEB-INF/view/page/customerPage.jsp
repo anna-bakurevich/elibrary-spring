@@ -8,7 +8,7 @@
     <title>Customer page</title>
 </head>
 
-<sec:authentication var = "user" property="principal"/>
+<sec:authentication var="user" property="principal"/>
 <h1><spring:message code="welcome.privatepage"/>${user.firstName}!</h1>
 
 
@@ -23,23 +23,24 @@
 
     </tr>
     <c:forEach items="${books}" var="book">
-            <tr>
-                <td>${book.authorFirstName}</td>
-                <td>${book.authorLastName}</td>
-                <td>${book.title}</td>
-                <td>${book.genre}</td>
-                <td align = "center">${book.count}</td>
-                <c:if test="${book.count>0}">
+        <tr>
+            <td>${book.authorFirstName}</td>
+            <td>${book.authorLastName}</td>
+            <td>${book.title}</td>
+            <td>${book.genre}</td>
+            <td align="center">${book.count}</td>
+            <c:if test="${book.count>0}">
                 <td>
-                    <form method="post" action="${pageContext.request.contextPath}/order">
+                    <form method="post" action="${pageContext.request.contextPath}/order?page=${page}">
                         <input name="bookToOrder" type="hidden" value="${book.id}">
                         <input type="submit" value=<spring:message code="order"/>>
                     </form>
                 </td>
-                </c:if>
-            </tr>
+            </c:if>
+        </tr>
     </c:forEach>
 </table>
+
 
 <c:if test="${page>0}">
     <a href="${pageContext.request.contextPath}/customerPage?page=${page-1}"><spring:message code="prevPage"/></a>
@@ -49,4 +50,15 @@
 </c:if>
 <br>
 <br>
-<a href="<spring:url value="/orderPage"/>"><spring:message code="order.heading"/></a>
+
+<c:if test="${existBookInOrder}">
+    <p style="color: red"><spring:message code="order.existBook"/></p>
+    <a href="${pageContext.request.contextPath}/customerPage?page=0"><spring:message code="return.private"/></a>
+</c:if>
+
+<c:if test="${order}">
+    <a href="<spring:url value="/orderPage"/>"><spring:message code="order.heading"/></a>
+</c:if>
+<p>order=${order}</p>
+
+
