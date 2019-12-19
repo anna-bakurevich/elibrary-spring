@@ -1,6 +1,8 @@
 package com.jd2.elibrary.web.controller;
 
 import com.jd2.elibrary.model.Book;
+import com.jd2.elibrary.model.Order;
+import com.jd2.elibrary.model.OrderStatus;
 import com.jd2.elibrary.model.User;
 import com.jd2.elibrary.service.impl.BookService;
 import com.jd2.elibrary.service.impl.OrderService;
@@ -51,5 +53,13 @@ public class OrderPageController {
             log.info("book {} deleted from order {} ", bookId, orderId);
         }
         return "redirect:/orderPage";
+    }
+    @PostMapping("/confirm")
+    public String confirm(HttpServletRequest req, UsernamePasswordAuthenticationToken principal){
+        User user = (User) principal.getPrincipal();
+        Order orderFilled = orderService.findOrderFilledByUserId(user.getId());
+        orderService.updateOrderStatus(orderFilled, OrderStatus.FORMED);
+        req.setAttribute("confirmed", true);
+        return "redirect:/customerPage";
     }
 }

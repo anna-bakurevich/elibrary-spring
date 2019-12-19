@@ -34,8 +34,9 @@
     </c:forEach>
 </table>
 
-<form method="post" action="${pageContext.request.contextPath}/orderPage">
+<form method="post" action="${pageContext.request.contextPath}/confirm">
     <input name="confirm" style="height: 22px; width: 220px;" type="submit" value=<spring:message code="order.confirm"/>>
 </form>
+
 </body>
 </html>

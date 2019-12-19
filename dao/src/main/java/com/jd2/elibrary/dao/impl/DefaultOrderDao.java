@@ -123,8 +123,12 @@ public class DefaultOrderDao implements OrderDao {
             }
         }
         OrderEntity orderEntity = orderJpaRepository.findById(orderId).get();
-        orderEntity.setBooksInOrder(BookConverter.convertToListBookEntity(books));
-        orderJpaRepository.save(orderEntity);
+        if (!books.isEmpty()) {
+            orderEntity.setBooksInOrder(BookConverter.convertToListBookEntity(books));
+            orderJpaRepository.save(orderEntity);
+        } else {
+            orderJpaRepository.deleteById(orderId);
+        }
     }
 
     @Override

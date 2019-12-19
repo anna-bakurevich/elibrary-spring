@@ -115,13 +115,5 @@ public class CustomerPageController {
         String p = req.getParameter("page");
         return "redirect:/customerPage?page=" + p;
     }
-
-    @PostMapping("/confirm")
-    public String confirm(HttpServletRequest req, UsernamePasswordAuthenticationToken principal){
-        User user = (User) principal.getPrincipal();
-        Order orderFilled = orderService.findOrderFilledByUserId(user.getId());
-        orderService.updateOrderStatus(orderFilled, OrderStatus.FORMED);
-        return "customerPage";
-    }
 }
 
