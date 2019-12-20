@@ -75,6 +75,6 @@ public class DefaultBookService implements BookService {
         int count = defaultBookDao.count();
         ResourceBundle resource = ResourceBundle.getBundle("methodConst");
         int pageSize = Integer.parseInt(resource.getString("pageSize"));
-        return (int)Math.ceil(count/pageSize);
+        return (int)Math.ceil((double)count/pageSize);
     }
 }

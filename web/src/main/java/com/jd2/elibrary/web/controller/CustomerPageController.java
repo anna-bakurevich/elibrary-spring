@@ -46,7 +46,7 @@ public class CustomerPageController {
             page = Integer.parseInt(req.getParameter("page"));
         }
         List<Book> books = bookService.paging(page);
-        int maxNumber = bookService.countPageBooks() - 1;
+        int maxNumber = bookService.countPageBooks()-1;
 
         req.setAttribute("books", books);
         req.setAttribute("maxNumber", maxNumber);

@@ -7,9 +7,10 @@
     <title>Order Page</title>
 </head>
 
-<%--вывести список книг в заказе кнопку подтвердить заказ и удалить из зазказа--%>
+
 <html>
 <body>
+<c:if test="${!confirmed}">
 <h3><spring:message code="order.title"/></h3>
 <table>
     <tr>
@@ -33,10 +34,16 @@
         </tr>
     </c:forEach>
 </table>
-
 <form method="post" action="${pageContext.request.contextPath}/confirm">
     <input name="confirm" style="height: 22px; width: 220px;" type="submit" value=<spring:message code="order.confirm"/>>
 </form>
+</c:if>
 
+<c:if test="${confirmed}">
+    <p style="color: green"><spring:message code="order.confirmed"/></p>
+    <br>
+    <br>
+    <a href="${pageContext.request.contextPath}/customerPage?page=0"><spring:message code="return.private"/></a>
+</c:if>
 </body>
 </html>

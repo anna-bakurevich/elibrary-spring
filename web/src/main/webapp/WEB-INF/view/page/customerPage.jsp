@@ -59,9 +59,3 @@
 <c:if test="${order}">
     <a href="<spring:url value="/orderPage"/>"><spring:message code="order.heading"/></a>
 </c:if>
-<p>order=${order}</p>
-<c:if test="${confirmed}">
-    <p style="color: green"></p><spring:message code="order.confirmed"/>
-</c:if>
-<p>confirmed=${confirmed}</p>
-

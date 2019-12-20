@@ -60,6 +60,6 @@ public class OrderPageController {
         Order orderFilled = orderService.findOrderFilledByUserId(user.getId());
         orderService.updateOrderStatus(orderFilled, OrderStatus.FORMED);
         req.setAttribute("confirmed", true);
-        return "redirect:/customerPage";
+        return "orderPage";
     }
 }
