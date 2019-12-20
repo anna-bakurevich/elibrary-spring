@@ -13,7 +13,6 @@
 <jsp:useBean id="now" class="java.util.Date"/>
 <fmt:setLocale value="en_US"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/>
-<p>${now}</p>
 <table>
     <tr>
         <th>ID</th>
@@ -42,19 +41,19 @@
             <td>${o.orderStatus}</td>
             <td>
                 <c:if test="${o.orderStatus eq 'FORMED'}">
-                    <form method="post" action="${pageContext.request.contextPath}/issue">
+                    <form style="display:inline-block" method="post" action="${pageContext.request.contextPath}/issue">
                         <input name="orderId" type="hidden" value="${o.id}">
                         <input type="submit" value=<spring:message code="order.issue"/>>
                     </form>
                 </c:if>
                 <c:if test="${(o.orderStatus eq 'ISSUED') or (o.orderStatus eq 'BLACKLIST')}">
-                    <form method="post" action="${pageContext.request.contextPath}/return">
+                    <form  style="display:inline-block" method="post" action="${pageContext.request.contextPath}/return">
                         <input name="orderId" type="hidden" value="${o.id}">
                         <input type="submit" value=<spring:message code="order.return"/>>
                     </form>
                 </c:if>
                 <c:if test="${o.orderStatus eq 'ISSUED'}">
-                    <form method="post" action="${pageContext.request.contextPath}/blackList">
+                    <form  style="display:inline-block" method="post" action="${pageContext.request.contextPath}/blackList">
                         <input name="orderId" type="hidden" value="${o.id}">
                         <input type="submit" value="Black list">
                     </form>
