@@ -38,4 +38,8 @@
         <put-attribute name="body" value="/WEB-INF/view/page/registration.jsp"/>
     </definition>
 
+    <definition name="orderAdmin" extends="default">
+        <put-attribute name="body" value="/WEB-INF/view/page/orderAdmin.jsp"/>
+    </definition>
+
 </tiles-definitions>

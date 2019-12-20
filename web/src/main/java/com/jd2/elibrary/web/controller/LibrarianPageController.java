@@ -31,7 +31,7 @@ public class LibrarianPageController {
     }
 
     @PostMapping("/librarianPage")
-    public String doPost(HttpServletRequest req) {
+    public String users(HttpServletRequest req) {
         int userId = Integer.parseInt(req.getParameter("deleteId"));
         if (userService.existsById(userId)) {
             userService.deleteById(userId);

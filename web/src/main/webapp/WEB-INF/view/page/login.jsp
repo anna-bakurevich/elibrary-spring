@@ -15,7 +15,7 @@
 
     <input type="text" required placeholder="login" name="login"><br>
     <input type="text" required placeholder="password" name="password"><br><br>
-    <input class="button" type="submit" value=<spring:message code="button.login"/>>
+    <input class="button" type="submit" value=<spring:message code="enter"/>>
 
 </form>
 </body>

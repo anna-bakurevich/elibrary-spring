@@ -4,7 +4,6 @@ import com.jd2.elibrary.model.Book;
 import com.jd2.elibrary.model.Order;
 import com.jd2.elibrary.model.OrderStatus;
 import com.jd2.elibrary.model.User;
-import com.jd2.elibrary.service.impl.BookService;
 import com.jd2.elibrary.service.impl.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -11,8 +11,6 @@
 <sec:authentication var = "librarian" property="principal"/>
 <h1><spring:message code="welcome.privatepage"/>${librarian.firstName}!</h1>
 
-<%--страница для библиотекаря--%>
-
 <h3><spring:message code="user.list"/></h3>
 <table>
     <tr>
@@ -38,7 +36,6 @@
         </tr>
     </c:forEach>
 </table>
-<a href="<spring:url value="/editBookCatalogue"/>"><spring:message code="edit.catalogue"/></a>
 
 
 

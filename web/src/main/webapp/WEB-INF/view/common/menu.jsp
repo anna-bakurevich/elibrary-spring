@@ -12,6 +12,10 @@
         <li><a href="${pageContext.request.contextPath}/logout"><spring:message code="logout"/></a></li>
         <li><a href="${pageContext.request.contextPath}/edit"><spring:message code="edit.heading"/></a></li>
 </sec:authorize>
+<sec:authorize  access="hasRole('ROLE_LIBRARIAN')">
+    <li><a href="${pageContext.request.contextPath}/orderAdmin"><spring:message code="order.list"/></a></li>
+    <li><a href="${pageContext.request.contextPath}/editBookCatalogue"><spring:message code="edit.catalogue"/></a></li>
+</sec:authorize>
 <sec:authorize access="isAnonymous()">
     <li><a href="${pageContext.request.contextPath}/registration"><spring:message code="registration.heading"/></a></li>
 </sec:authorize>

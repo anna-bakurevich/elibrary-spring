@@ -66,6 +66,11 @@ public class WebConfig {
     }
 
     @Bean
+    OrderAdminController orderAdminController(){
+        return new OrderAdminController(serviceConfig.orderService());
+    }
+
+    @Bean
     public UrlBasedViewResolver tilesViewResolver() {
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();
         resolver.setViewClass(TilesView.class);

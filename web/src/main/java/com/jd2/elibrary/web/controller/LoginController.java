@@ -51,7 +51,7 @@ public class LoginController {
             req.setAttribute("error", "login or password invalid");
             return "registration";
         }
-        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities());
+        Authentication auth = new UsernamePasswordAuthenticationToken(user, null, getAuthorities(user.getRole()));
         SecurityContextHolder.getContext().setAuthentication(auth);
         log.info("user {} logged", user.getLogin());
 
@@ -61,9 +61,15 @@ public class LoginController {
         return "redirect:/customerPage";
     }
 
-    private List<GrantedAuthority> getAuthorities() {
-        return Arrays.asList((GrantedAuthority) () -> "ROLE_CUSTOMER",
-                (GrantedAuthority) () -> "ROLE_LIBRARIAN");
+    private List<GrantedAuthority> getAuthorities(Role role) {
+        switch (role) {
+            case CUSTOMER:
+                return Arrays.asList((GrantedAuthority) () -> "ROLE_CUSTOMER");
+            case LIBRARIAN:
+                return Arrays.asList((GrantedAuthority) () -> "ROLE_LIBRARIAN");
+            default:
+                throw new RuntimeException("wrong role");
+        }
     }
 }
 

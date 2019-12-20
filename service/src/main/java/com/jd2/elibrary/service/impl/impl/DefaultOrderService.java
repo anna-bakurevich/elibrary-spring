@@ -67,6 +67,11 @@ public class DefaultOrderService implements OrderService {
     }
 
     @Override
+    public Order findById(int id) {
+        return defaultOrderDao.findById(id);
+    }
+
+    @Override
     @Transactional
     public boolean existByUser(User user){
         return defaultOrderDao.existByUser(user);

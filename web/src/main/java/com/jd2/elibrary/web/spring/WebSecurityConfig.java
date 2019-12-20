@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //для клиентов
                 .antMatchers("/customerPage", "/orderPage").hasRole("CUSTOMER")
                 //для библиотекарей
-                .antMatchers("/librarianPage", "/editBookCatalogue").hasRole("LIBRARIAN")
+                .antMatchers("/librarianPage", "/editBookCatalogue", "/orderAdmin").hasRole("LIBRARIAN")
                 //все остальное для всех аутентифицированных пользователей
                 .anyRequest().authenticated();
     }

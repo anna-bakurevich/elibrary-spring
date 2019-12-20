@@ -25,6 +25,8 @@ public interface OrderService {
 
     boolean existById(int userId);
 
+    Order findById(int id);
+
     boolean existByUser(User user);
 
     List<Order> findAllByUserId(int userId);
