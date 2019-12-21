@@ -105,8 +105,6 @@ public class DefaultOrderDao implements OrderDao {
         List<Book> books = getBooksByOrderId(order.getId());
         BookEntity bookEntity = bookJpaRepository.findById(bookId).get();
         books.add(BookConverter.convertToBook(bookEntity));
-        System.out.println("РАЗМЕР BOOKS " + books.size());
-        System.out.println(books);
         OrderEntity orderEntity = OrderConverter.convertToOrderEntity(order);
         orderEntity.setBooksInOrder(BookConverter.convertToListBookEntity(books));
         orderJpaRepository.save(orderEntity);

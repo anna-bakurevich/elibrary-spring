@@ -56,6 +56,14 @@ public class DefaultUserDao implements UserDao {
     }
 
     @Override
+    public boolean hasOrder(int userId) {
+        if (userJpaRepository.findById(userId).get().getOrders().isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public void update(User user, String firstName, String lastName, String phone) {
         UserEntity userEntity = UserConverter.convertToUserEntity(user);
         userJpaRepository.update(userEntity.getId(), firstName, lastName, phone);

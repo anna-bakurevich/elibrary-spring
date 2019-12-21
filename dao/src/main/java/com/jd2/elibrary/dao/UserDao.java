@@ -21,6 +21,8 @@ public interface UserDao {
 
     boolean existsByLogin(String login);
 
+    boolean hasOrder(int userId);
+
     //update
     void update(User user, String firstName, String lastName, String phone);
 

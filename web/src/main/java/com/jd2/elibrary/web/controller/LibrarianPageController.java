@@ -34,9 +34,12 @@ public class LibrarianPageController {
     public String users(HttpServletRequest req) {
         int userId = Integer.parseInt(req.getParameter("deleteId"));
         if (userService.existsById(userId)) {
-            userService.deleteById(userId);
+            if (!userService.deleteById(userId)){
+                req.setAttribute("error", true);
+                return "librarianPage";
+            }
             log.info("user {} deleted", userId);
         }
-        return "redirect:librarianPage";
+        return "redirect:/librarianPage";
     }
 }

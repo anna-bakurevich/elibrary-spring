@@ -19,10 +19,8 @@
         <spring:message code="name"/> name="firstName"><br>
         <input type="text" required placeholder=
         <spring:message code="surname"/> name="lastName"><br><br>
-        <input type="text" required placeholder=
-        <spring:message code="phone"/> name="phone"><br><br>
-        <input type="text" required placeholder=
-        <spring:message code="login"/> name="login"><br><br>
+        <input type="text" required placeholder=<spring:message code="phone"/> name="phone"><br><br>
+        <input type="text" required placeholder=<spring:message code="login"/> name="login"><br><br>
         <input type="text" required placeholder=
         <spring:message code="password"/> name="password"><br><br>
         <input class="button" type="submit" value=<spring:message code="signup"/>>

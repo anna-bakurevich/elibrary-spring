@@ -1,12 +1,10 @@
 package com.jd2.elibrary.dao.impl;
 
+import com.jd2.elibrary.dao.BookDao;
 import com.jd2.elibrary.dao.OrderDao;
 import com.jd2.elibrary.dao.UserDao;
 import com.jd2.elibrary.dao.config.DaoConfig;
-import com.jd2.elibrary.model.Book;
-import com.jd2.elibrary.model.Order;
-import com.jd2.elibrary.model.OrderStatus;
-import com.jd2.elibrary.model.User;
+import com.jd2.elibrary.model.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +26,8 @@ public class DefaultOrderDaoTest {
     OrderDao orderDao;
     @Autowired
     UserDao userDao;
+    @Autowired
+    BookDao bookDao;
 
     @BeforeEach
     public void init() {
@@ -36,15 +36,15 @@ public class DefaultOrderDaoTest {
         order.setUser(user);
         order.setOrderDate(LocalDate.now());
         order.setReturnDate(LocalDate.now().plusDays(30));
-        order.setOrderStatus(OrderStatus.BLACKLIST);
-
+        order.setOrderStatus(OrderStatus.FILLED);
         orderDao.save(order);
+
     }
 
     @Transactional
     @Test
     void findByOrderStatusTest() {
-        List<Order> orders = orderDao.findOrderByOrderStatusAndUser(OrderStatus.BLACKLIST, 4);
+        List<Order> orders = orderDao.findOrderByOrderStatusAndUser(OrderStatus.FILLED, 4);
         assertNotNull(orders);
     }
 
@@ -82,15 +82,5 @@ public class DefaultOrderDaoTest {
     void existByUserTest() {
         User user = userDao.findById(4);
         assertTrue(orderDao.existByUser(user));
-    }
-
-    @Transactional
-    @Test
-    void deleteBookFromOrderTest() {
-        Order order = orderDao.findByOrderStatus(OrderStatus.FILLED);
-        int orderId = order.getId();
-        int bookId = orderDao.getBooksByOrderId(orderId).get(0).getId();
-        orderDao.deleteBookFromOrder(orderId, bookId);
-        assertFalse(orderDao.existBookInOrder(orderId, bookId));
     }
 }

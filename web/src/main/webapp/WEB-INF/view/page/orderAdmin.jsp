@@ -40,6 +40,10 @@
 
             <td>${o.orderStatus}</td>
             <td>
+                <form  style="display:inline-block" method="post" action="${pageContext.request.contextPath}/orderDetails">
+                    <input name="orderId" type="hidden" value="${o.id}">
+                    <input type="submit" value=<spring:message code="order.details"/>>
+                </form>
                 <c:if test="${o.orderStatus eq 'FORMED'}">
                     <form style="display:inline-block" method="post" action="${pageContext.request.contextPath}/issue">
                         <input name="orderId" type="hidden" value="${o.id}">
@@ -63,4 +67,7 @@
         </tr>
     </c:forEach>
 </table>
+<br>
+<br>
+<a href="<spring:url value="/orderAdmin"/>"><spring:message code="return.orderAdmin"/></a>
 

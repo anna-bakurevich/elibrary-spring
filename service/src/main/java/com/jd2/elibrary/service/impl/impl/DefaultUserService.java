@@ -32,8 +32,12 @@ public class DefaultUserService implements UserService {
 
     @Override
     @Transactional
-    public void deleteById(int id) {
+    public boolean deleteById(int id) {
+        if (defaultUserDao.hasOrder(id)){
+            return false;
+        }
         defaultUserDao.deleteById(id);
+        return true;
     }
 
     @Override

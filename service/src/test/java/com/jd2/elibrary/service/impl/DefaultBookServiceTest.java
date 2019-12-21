@@ -11,6 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -46,24 +48,24 @@ class DefaultBookServiceTest {
         verify(dao).save(book);
     }
 
-//    @Test
-//    void incrCountBookTest(){
-//        Book book = new Book();
-//        book.setCount(5);
-//        System.out.println(book.getCount());
-//        when(dao.findById(book.getId())).thenReturn(book);
-//        service.incrCountBook(book.getId(),1);
-//        verify(dao).updateCount(any(), eq(6));
-//    }
+    @Test
+    void incrCountBookTest(){
+        Book book = new Book();
+        book.setCount(5);
+        System.out.println(book.getCount());
+        when(dao.findById(book.getId())).thenReturn(book);
+        service.incrCountBook(book.getId(),1);
+        verify(dao).updateCount(any(), eq(6));
+    }
 
-//    @Test
-//    void decrCountBookTest(){
-//        Book book = new Book();
-//        book.setCount(5);
-//        when(dao.findById(1)).thenReturn(book);
-//        service.decrCountBook(1,1);
-//        verify(dao).updateCount(any(), eq(4));
-//    }
+    @Test
+    void decrCountBookTest(){
+        Book book = new Book();
+        book.setCount(5);
+        when(dao.findById(1)).thenReturn(book);
+        service.decrCountBook(1,1);
+        verify(dao).updateCount(any(), eq(4));
+    }
 
     @Test
     void countPageBooksTest(){

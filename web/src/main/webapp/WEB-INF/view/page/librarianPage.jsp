@@ -37,5 +37,12 @@
     </c:forEach>
 </table>
 
+<c:if test="${error}">
+    <p style="color: red"><spring:message code="error.deleteUser"/></p>
+    <br>
+    <br>
+    <a href="<spring:url value="/librarianPage"/>"><spring:message code="return.private"/></a>
+</c:if>
+
 
 

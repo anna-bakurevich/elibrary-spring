@@ -1,5 +1,6 @@
 package com.jd2.elibrary.web.controller;
 
+import com.jd2.elibrary.model.Book;
 import com.jd2.elibrary.model.Order;
 import com.jd2.elibrary.model.OrderStatus;
 import com.jd2.elibrary.service.impl.OrderService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -54,5 +56,17 @@ public class OrderAdminController {
         orderService.updateOrderStatus(orderService.findById(orderId), OrderStatus.BLACKLIST);
         log.info("order {} moved to black list {}", orderId, LocalDateTime.now());
         return "redirect:/orderAdmin";
+    }
+
+    @PostMapping("/orderDetails")
+    public String orderDetails(HttpServletRequest req){
+        int orderId = Integer.parseInt(req.getParameter("orderId"));
+        Order order = orderService.findById(orderId);
+        req.setAttribute("orderDate", order.getOrderDate());
+        req.setAttribute("returnDate", order.getReturnDate());
+        req.setAttribute("status", order.getOrderStatus());
+        List<Book> books = orderService.getBooksByOrderId(orderId);
+        req.setAttribute("books", books);
+        return "orderDetails";
     }
 }
