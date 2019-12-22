@@ -45,5 +45,8 @@
     <br>
     <a href="${pageContext.request.contextPath}/customerPage?page=0"><spring:message code="return.private"/></a>
 </c:if>
+<br>
+<br>
+<a href="<spring:url value="/customerPage"/>"><spring:message code="return.private"/></a>
 </body>
 </html>

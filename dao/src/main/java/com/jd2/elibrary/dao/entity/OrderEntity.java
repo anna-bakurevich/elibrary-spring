@@ -27,7 +27,7 @@ public class OrderEntity {
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany()
     @JoinTable(name = "order_book",
             joinColumns = @JoinColumn(name = "order_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
