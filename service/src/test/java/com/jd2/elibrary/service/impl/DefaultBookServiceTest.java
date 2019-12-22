@@ -48,4 +48,31 @@ class DefaultBookServiceTest {
         verify(dao).paging(2);
     }
 
+    @Test
+    void countPageBooksTest(){
+        service.countPageBooks();
+        verify(dao).count();
+    }
+
+    @Test
+    void decrCountBookTest(){
+        Book book = new Book();
+        book.setId(1);
+        book.setCount(10);
+        dao.save(book);
+        when(dao.findById(1)).thenReturn(book);
+        service.decrCountBook(1, 3);
+        verify(dao).updateCount(1, 7);
+    }
+    @Test
+    void incrCountBookTest(){
+        Book book = new Book();
+        book.setId(1);
+        book.setCount(10);
+        dao.save(book);
+        when(dao.findById(1)).thenReturn(book);
+        service.incrCountBook(1, 3);
+        verify(dao).updateCount(1, 13);
+    }
+
 }

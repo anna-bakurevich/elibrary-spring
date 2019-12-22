@@ -52,10 +52,7 @@ public class DefaultBookService implements BookService {
         //устанавливаем уменьшенное кол-во
         if (newCount >=0) {
             defaultBookDao.updateCount(id, newCount);
-        } else {
-            log.error("Введенное количество больше имеющегося в наличии! Изменения не внесены.");
         }
-
     }
 
     @Override

@@ -51,6 +51,10 @@ public class EditBookCatalogueController {
         String p = req.getParameter("page");
         int bookDelete = Integer.parseInt(req.getParameter("bookDelete"));
         int countDelete = Integer.parseInt(req.getParameter("countDelete"));
+        if (bookService.findById(bookDelete).getCount() < countDelete) {
+            req.setAttribute("error", true);
+            return "editBookCatalogue";
+        }
         bookService.decrCountBook(bookDelete, countDelete);
         log.info("book {} decreased by {}", bookDelete, countDelete);
         return "redirect:/editBookCatalogue?page=" + p;

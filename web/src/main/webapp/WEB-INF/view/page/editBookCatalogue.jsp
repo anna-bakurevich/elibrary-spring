@@ -49,6 +49,12 @@
 <c:if test="${page<maxNumber}">
 <a href="${pageContext.request.contextPath}/editBookCatalogue?page=${page+1}"><spring:message code="nextPage"/></a>
 </c:if>
+<c:if test="${error}">
+    <p style="color: red"><spring:message code="error.deleteBook"/></p>
+    <br>
+    <br>
+    <a href="<spring:url value="/editBookCatalogue"/>"><spring:message code="return.catalogue"/></a>
+</c:if>
 
 <br>
 <br>

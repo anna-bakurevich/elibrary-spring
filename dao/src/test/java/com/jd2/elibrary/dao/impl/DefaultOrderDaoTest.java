@@ -100,4 +100,11 @@ public class DefaultOrderDaoTest {
         assertEquals(OrderStatus.BLACKLIST, orderDao.findById(order.getId()).getOrderStatus());
     }
 
+    @Transactional
+    @Test
+    void findByOrderStatus(){
+        orderDao.findByOrderStatus(OrderStatus.FILLED);
+        assertNotNull(orderDao.findByOrderStatus(OrderStatus.FILLED));
+    }
+
 }
