@@ -83,4 +83,21 @@ public class DefaultOrderDaoTest {
         User user = userDao.findById(4);
         assertTrue(orderDao.existByUser(user));
     }
+
+    @Transactional
+    @Test
+    void deleteByIdTest() {
+        int orderId = orderDao.findAllByUserId(4).get(0).getId();
+        orderDao.deleteById(orderId);
+        assertFalse(orderDao.existsById(orderId));
+    }
+
+    @Transactional
+    @Test
+    void updateByOrderStatus(){
+        Order order = orderDao.findAllByUserId(4).get(0);
+        orderDao.updateOrderStatus(order, OrderStatus.BLACKLIST);
+        assertEquals(OrderStatus.BLACKLIST, orderDao.findById(order.getId()).getOrderStatus());
+    }
+
 }

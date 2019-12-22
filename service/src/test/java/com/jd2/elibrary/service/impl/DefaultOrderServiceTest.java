@@ -82,4 +82,25 @@ public class DefaultOrderServiceTest {
         verify(dao).save(order);
     }
 
+
+    @Test
+    void existBookInOrderTest(){
+        service.existBookInOrder(1,1);
+        verify(dao).existBookInOrder(1,1);
+    }
+
+    @Test
+    void findById(){
+        service.findById(1);
+        verify(dao).findById(1);
+    }
+
+    @Test
+    void existByUser(){
+        User user = new User();
+        service.existByUser(user);
+        verify(dao).existByUser(user);
+    }
+
+
 }

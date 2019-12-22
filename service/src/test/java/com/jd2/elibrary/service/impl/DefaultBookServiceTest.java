@@ -9,8 +9,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -23,14 +25,6 @@ class DefaultBookServiceTest {
 
     @InjectMocks
     DefaultBookService service;
-
-//    @Test
-//    void getBooksTest() {
-//        when(dao.findAll()).thenReturn(new ArrayList<Book>());
-//        List<Book> books = service.paging(1,2);
-//        assertNotNull(books);
-//    }
-
 
     @Test
     void getByIdTest() {
@@ -49,25 +43,9 @@ class DefaultBookServiceTest {
     }
 
     @Test
-    void incrCountBookTest(){
-        Book book = new Book();
-        book.setCount(5);
-        System.out.println(book.getCount());
-        when(dao.findById(book.getId())).thenReturn(book);
-        service.incrCountBook(book.getId(),1);
-        verify(dao).updateCount(any(), eq(6));
+    void pagingTest(){
+        service.paging(2);
+        verify(dao).paging(2);
     }
 
-    @Test
-    void decrCountBookTest(){
-        Book book = new Book();
-        book.setCount(5);
-        when(dao.findById(1)).thenReturn(book);
-        service.decrCountBook(1,1);
-        verify(dao).updateCount(any(), eq(4));
-    }
-
-    @Test
-    void countPageBooksTest(){
-    }
 }
