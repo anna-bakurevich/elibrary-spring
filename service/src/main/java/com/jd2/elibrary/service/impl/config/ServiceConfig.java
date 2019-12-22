@@ -31,7 +31,7 @@ public class ServiceConfig {
 
     @Bean
     public OrderService orderService(){
-        return new DefaultOrderService(daoConfig.orderDao());
+        return new DefaultOrderService(daoConfig.orderDao(),daoConfig.bookDao());
     }
 
 }

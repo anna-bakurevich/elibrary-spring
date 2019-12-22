@@ -1,5 +1,6 @@
 package com.jd2.elibrary.service.impl.impl;
 
+import com.jd2.elibrary.dao.BookDao;
 import com.jd2.elibrary.dao.OrderDao;
 import com.jd2.elibrary.model.Book;
 import com.jd2.elibrary.model.Order;
@@ -15,11 +16,12 @@ import java.util.List;
 public class DefaultOrderService implements OrderService {
 
     private final OrderDao defaultOrderDao;
+    private final BookDao defaultBookDao;
 
-    public DefaultOrderService(OrderDao defaultOrderDao) {
+    public DefaultOrderService(OrderDao defaultOrderDao, BookDao defaultBookDao) {
         this.defaultOrderDao = defaultOrderDao;
+        this.defaultBookDao = defaultBookDao;
     }
-
 
     @Override
     @Transactional
@@ -46,6 +48,12 @@ public class DefaultOrderService implements OrderService {
 
     @Override
     public void updateOrderStatus(Order order, OrderStatus status) {
+        if (status.equals(OrderStatus.RETURNED)) {
+            List<Book> books = getBooksByOrderId(order.getId());
+            for (Book b : books) {
+                defaultBookDao.updateCount(b.getId(), b.getCount() + 1);
+            }
+        }
         defaultOrderDao.updateOrderStatus(order, status);
     }
 
@@ -73,7 +81,7 @@ public class DefaultOrderService implements OrderService {
 
     @Override
     @Transactional
-    public boolean existByUser(User user){
+    public boolean existByUser(User user) {
         return defaultOrderDao.existByUser(user);
     }
 

@@ -133,7 +133,6 @@ public class DefaultOrderDao implements OrderDao {
     public void updateOrderStatus(Order order, OrderStatus status) {
         OrderEntity orderEntity = OrderConverter.convertToOrderEntity(order);
         orderEntity.setOrderStatus(status);
-        //почему после изменения статуса заказа очищается список книг?
         List<Book> books = getBooksByOrderId(order.getId());
         orderEntity.setBooksInOrder(BookConverter.convertToListBookEntity(books));
         orderJpaRepository.save(orderEntity);

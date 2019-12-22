@@ -6,6 +6,7 @@ import com.jd2.elibrary.model.OrderStatus;
 import com.jd2.elibrary.service.impl.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,6 +63,7 @@ public class OrderAdminController {
     public String orderDetails(HttpServletRequest req){
         int orderId = Integer.parseInt(req.getParameter("orderId"));
         Order order = orderService.findById(orderId);
+        req.setAttribute("orderId",orderId);
         req.setAttribute("orderDate", order.getOrderDate());
         req.setAttribute("returnDate", order.getReturnDate());
         req.setAttribute("status", order.getOrderStatus());

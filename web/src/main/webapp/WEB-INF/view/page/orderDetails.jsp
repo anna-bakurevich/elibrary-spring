@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<h3><spring:message code="order.title"/> ${orderId}</h3>
+<h3><spring:message code="order.title"/><c:out value=" №${orderId}"/></h3>
 <table>
     <tr>
         <th>ISBN</th>
@@ -38,8 +38,28 @@
 </table>
 <br>
 <br>
-<a href="<spring:url value="/orderAdmin"/>"><spring:message code="return.orderAdmin"/></a>
+<c:if test="${st eq 'FORMED'}">
+    <form style="display:inline-block" method="post" action="${pageContext.request.contextPath}/issue">
+        <input name="orderId" type="hidden" value="${orderId}">
+        <input type="submit" value=<spring:message code="order.issue"/>>
+    </form>
+</c:if>
+<c:if test="${(st eq 'ISSUED') or (st eq 'BLACKLIST')}">
+    <form  style="display:inline-block" method="post" action="${pageContext.request.contextPath}/return">
+        <input name="orderId" type="hidden" value="${orderId}">
+        <input type="submit" value=<spring:message code="order.return"/>>
+    </form>
+</c:if>
+<c:if test="${st eq 'ISSUED'}">
+    <form  style="display:inline-block" method="post" action="${pageContext.request.contextPath}/blackList">
+        <input name="orderId" type="hidden" value="${orderId}">
+        <input type="submit" value="Black list">
+    </form>
+</c:if>
+<br>
+<br>
 
+<a href="<spring:url value="/orderAdmin"/>"><spring:message code="return.orderAdmin"/></a>
 </body>
 </html>
 
