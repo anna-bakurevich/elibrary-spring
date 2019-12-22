@@ -114,12 +114,16 @@ public class DefaultOrderDao implements OrderDao {
     public void deleteBookFromOrder(int orderId, int bookId) {
         List<Book> books = getBooksByOrderId(orderId);
         BookEntity bookEntity = bookJpaRepository.findById(bookId).get();
+        //удаляем книгу из заказа
         for (Book book : books) {
             if (book.getId() == bookEntity.getId()) {
                 books.remove(book);
                 break;
             }
         }
+        //увеличиваем количество удаленной из заказа книги в каталоге
+        bookJpaRepository.updateCount(bookId, bookJpaRepository.findById(bookId).get().getCount()+1);
+        //если список книг в заказе пустой, заказ удаляется
         OrderEntity orderEntity = orderJpaRepository.findById(orderId).get();
         if (!books.isEmpty()) {
             orderEntity.setBooksInOrder(BookConverter.convertToListBookEntity(books));
