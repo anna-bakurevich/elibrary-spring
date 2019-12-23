@@ -37,7 +37,7 @@ public class OrderConverter {
     }
 
     public static List<Order> convertToListOrder(List<OrderEntity> orderEntities) {
-        if (orderEntities == null){
+        if (orderEntities == null) {
             return null;
         }
         final List<Order> orders = new ArrayList<>();

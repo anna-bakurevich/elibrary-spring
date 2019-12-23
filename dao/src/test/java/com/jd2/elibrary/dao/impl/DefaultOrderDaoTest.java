@@ -94,7 +94,7 @@ public class DefaultOrderDaoTest {
 
     @Transactional
     @Test
-    void updateByOrderStatus(){
+    void updateByOrderStatus() {
         Order order = orderDao.findAllByUserId(4).get(0);
         orderDao.updateOrderStatus(order, OrderStatus.BLACKLIST);
         assertEquals(OrderStatus.BLACKLIST, orderDao.findById(order.getId()).getOrderStatus());
@@ -102,7 +102,7 @@ public class DefaultOrderDaoTest {
 
     @Transactional
     @Test
-    void findByOrderStatus(){
+    void findByOrderStatus() {
         orderDao.findByOrderStatus(OrderStatus.FILLED);
         assertNotNull(orderDao.findByOrderStatus(OrderStatus.FILLED));
     }

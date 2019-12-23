@@ -38,7 +38,7 @@ public class UserConverter {
     }
 
     public static List<User> convertToListUser(List<UserEntity> userEntities) {
-        if (userEntities == null){
+        if (userEntities == null) {
             return null;
         }
         final List<User> users = new ArrayList<>();

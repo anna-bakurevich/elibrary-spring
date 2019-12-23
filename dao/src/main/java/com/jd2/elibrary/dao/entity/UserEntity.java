@@ -33,7 +33,7 @@ public class UserEntity {
     private List<OrderEntity> orders = new ArrayList<>();
 
 
-    public UserEntity(){
+    public UserEntity() {
 
     }
 

@@ -39,7 +39,7 @@ public class BookConverter {
 
 
     public static List<Book> convertToListBook(List<BookEntity> booksEntity) {
-        if (booksEntity == null){
+        if (booksEntity == null) {
             return null;
         }
         final List<Book> books = new ArrayList<>();
@@ -50,7 +50,7 @@ public class BookConverter {
     }
 
     public static List<BookEntity> convertToListBookEntity(List<Book> books) {
-        if (books == null){
+        if (books == null) {
             return null;
         }
         final List<BookEntity> booksEntity = new ArrayList<>();

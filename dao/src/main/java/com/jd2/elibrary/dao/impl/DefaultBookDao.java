@@ -38,7 +38,7 @@ public class DefaultBookDao implements BookDao {
         return BookConverter.convertToListBook(books);
     }
 
-   @Override
+    @Override
     public Book findById(int id) {
         Optional<BookEntity> bookEntity = bookJpaRepository.findById(id);
         return BookConverter.convertToBook(bookEntity.get());
@@ -65,7 +65,7 @@ public class DefaultBookDao implements BookDao {
         ResourceBundle resource = ResourceBundle.getBundle("methodConst");
         int pageSize = Integer.parseInt(resource.getString("pageSize"));
         Page<BookEntity> booksPage = bookJpaRepository.findAll(PageRequest.of(
-                pageNumber, pageSize, Sort.by("title")));
+                pageNumber, pageSize, Sort.by("genre")));
         List<BookEntity> books = booksPage.getContent();
         return BookConverter.convertToListBook(books);
     }

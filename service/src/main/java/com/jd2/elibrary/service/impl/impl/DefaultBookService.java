@@ -50,7 +50,7 @@ public class DefaultBookService implements BookService {
         //уменьшенное кол-во
         int newCount = oldCount - count;
         //устанавливаем уменьшенное кол-во
-        if (newCount >=0) {
+        if (newCount >= 0) {
             defaultBookDao.updateCount(id, newCount);
         }
     }
@@ -72,6 +72,6 @@ public class DefaultBookService implements BookService {
         int count = defaultBookDao.count();
         ResourceBundle resource = ResourceBundle.getBundle("methodConst");
         int pageSize = Integer.parseInt(resource.getString("pageSize"));
-        return (int)Math.ceil((double)count/pageSize);
+        return (int) Math.ceil((double) count / pageSize);
     }
 }
